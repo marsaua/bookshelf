@@ -1,0 +1,10 @@
+<% friend_user = friendship.user_id == current_user.id ? friendship.friend : friendship.user %>
+<%= link_to user_path(friend_user) do %>
+  <div class="flex justify-between items-center w-full p-4" style="border-bottom: 2px solid black;">
+    
+    <%= render "common/user", user: friend_user %>
+    
+    <%= link_to "Delete friend", friendship_path(friendship), 
+        data: { turbo_method: :delete }, class: "button button-secondary" %>
+  </div>
+<% end %>

@@ -1,0 +1,5 @@
+<div>
+    <% @users&.each do |user| %>
+        <%= render "users/user_card", user: user %>
+    <% end %>
+</div>

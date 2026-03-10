@@ -1,0 +1,11 @@
+<div class="w-full flex items-center gap-4">
+    <% if user.avatar.present? %>
+        <%= image_tag user.avatar, class:"avatar" %>
+    <% else %>
+        <%= image_tag "default-avatar.jpg", class:"avatar" %>
+    <% end %>
+    <div>
+        <p><%= user.first_name %> <%= user.last_name %></p>
+        <p><%= user.email %></p>
+    </div>
+</div>

@@ -1,0 +1,6 @@
+<div>
+    <p><%= sent_requests_friend.friend.first_name %> <%= sent_requests_friend.friend.last_name %> </p>
+    <p><%= sent_requests_friend.friend.email %></p>
+    <%= link_to "Cancel request", friendship_path(sent_requests_friend), 
+    data: { turbo_method: :delete } %>
+</div>

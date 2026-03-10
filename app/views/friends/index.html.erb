@@ -1,0 +1,22 @@
+<div>
+    <% if @received_requests.present? %>
+        <h3 class="heading-h3">You have a new friend request</h3>
+        <% @received_requests.each do |friendship| %>
+            <%= render "friends/received_requests", friendship: friendship %>
+        <% end %>
+    <% end %>
+
+    <% if @sent_requests_friends.present? %>
+        <h3 class="heading-h3">Friend request you sent</h3>
+        <% @sent_requests_friends.each do |sent_requests_friend| %>
+            <%= render "friends/sent_requests_friend", sent_requests_friend: sent_requests_friend %>
+        <% end %>
+    <% end %>
+
+    <% if @all_friends.present? %>
+        <h3 class="heading-h3">Your friends</h3>
+        <% @all_friends.each do |friendship| %>
+            <%= render "friends/friend", friendship: friendship %>
+        <% end %>
+    <% end %>
+</div>

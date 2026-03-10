@@ -1,0 +1,22 @@
+<header>
+    <div class="flex justify-between items-center px-5 bg-white" style="height: 100px;" >
+
+        <%= link_to books_path do %>
+            <%= image_tag "books.svg", width: 48, height: 48, class:"cursor-pointer" %>
+        <% end %>        
+        <ul class="flex gap-8">
+            <li class="header-item"><%= link_to  "My Friends", friends_path %></li>
+            <li class="header-item"><%= link_to "All Users", users_path %></li>
+        </ul>
+        <div class="profile-wrapper">
+            <div class="flex gap-2 items-center">
+                <%= image_tag "user.svg", width: 30, height: 30, class:"profile-logo" %>
+                <p> <%= current_user.first_name %> <%= current_user.last_name %></p>
+            </div>
+            <div class="profile-menu">
+                <%= link_to "Edit Profile", edit_user_registration_path %>
+                <%= link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete } %>
+            </div>
+        </div>
+    </div>
+</header>

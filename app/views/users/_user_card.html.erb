@@ -1,0 +1,21 @@
+<div class="user-card">
+    <div class="avatar">
+        <% if user.avatar.present? %>
+        <%= image_tag user.avatar %>
+        <% else %>
+        <%= image_tag "default-avatar.jpg" %>
+        <% end %>
+    </div>
+    <div>
+        <p class="font-bold"> <%= user.first_name %> <%= user.last_name %> </p>
+        <p> Interests will be soon </p>
+    </div>
+    <div>
+    <% friendship = current_user.friendships.find_by(friend_id: user.id) %>
+        <% if friendship %>
+            <%= button_to "Remove from friends", friendship_path(friendship), method: :delete %>
+        <% else %>
+            <%= button_to "Become friends", friendships_path, params: { friend_id: user.id }, method: :post %>
+        <% end %>
+    </div>
+</div>

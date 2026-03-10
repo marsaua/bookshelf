@@ -1,0 +1,27 @@
+<div class="flex gap-4">
+        <%= image_tag book.cover_url if book.cover_url.present? %>
+        <div>
+            <h1 class="text-2xl font-bold"><%= book.title %></h1>
+            <p class="text-gray-500"><%= book.author %></p>
+            <p class="text-gray-500"><%= book.description %></p>
+            <p class="text-gray-500"><%= book.price %></p>
+            <% if book.lent_to_friend %>
+                <p class="text-">Book is lent</p>
+            <% end %>
+        </div>
+    </div>
+
+    <% if @user.blank? %>
+        <div>
+
+            <%= button_to "Delete", book_path(book), method: :delete %>
+            <% if @book.lent_to_friend %>
+                <%= button_to "Take back", toggle_lent_book_path(book), method: :patch %>
+            <% else %>
+                <%= button_to "Lend", toggle_lent_book_path(book), method: :patch %>
+            <% end %>
+            <%= button_to "Back", books_path, method: :get %>
+        </div>
+    <% else %>
+        <%= button_to "Lend", toggle_lent_book_path(book), method: :patch %>
+    <% end %>
