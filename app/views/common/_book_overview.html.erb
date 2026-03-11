@@ -1,5 +1,7 @@
+<%= button_to "<- Back", books_path, method: :get, class: "text-left mb-6 cursor-pointer" %>
 <div class="flex gap-4">
-        <%= image_tag book.cover_url if book.cover_url.present? %>
+        <%= image_tag book.cover_url, class: "h-[250px]" if book.cover_url.present? %>       
+
         <div>
             <h1 class="text-2xl font-bold"><%= book.title %></h1>
             <p class="text-gray-500"><%= book.author %></p>
@@ -12,16 +14,15 @@
     </div>
 
     <% if @user.blank? %>
-        <div>
+        <div class="flex gap-4 mt-4 mx-auto" >
 
-            <%= button_to "Delete", book_path(book), method: :delete %>
-            <% if @book.lent_to %>
-                <%= button_to "Take back", lend_book_path(book), method: :patch %>
-            <% else %>
-                <button onclick="openLentModal()" class="button button-primary">Lend Book</button>
-                <%= render "common/lend_book_modal" %>
-            <% end %>
-            <%= button_to "Back", books_path, method: :get %>
+        <% if @book.lent_to %>
+        <%= button_to "Take back", lend_book_path(book), method: :patch, class:"button button-primary" %>
+        <% else %>
+        <button onclick="openLentModal()" class="button button-primary">Lend Book</button>
+        <%= render "common/lend_book_modal" %>
+        <% end %>
+        <%= button_to "Delete", book_path(book), method: :delete, class:"button button-secondary" %>
         </div>
     <% else %>
         # <%= button_to "Lend", lend_book_path(book), method: :patch %>

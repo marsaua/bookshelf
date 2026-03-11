@@ -98,6 +98,7 @@ html {
     min-width: 200px;
     transition: 500ms;
     white-space: nowrap;
+    cursor: pointer;
   }
   .button-primary {
     background-color: #2E6F40;
