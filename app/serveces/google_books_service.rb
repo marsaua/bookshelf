@@ -16,7 +16,7 @@ class GoogleBooksService
 
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
-    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    http.verify_mode = OpenSSL::SSL::VERIFY_PEER
 
     request = Net::HTTP::Get.new(uri)
     request['Referer'] = 'http://localhost:3000' 
