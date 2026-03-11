@@ -17,7 +17,12 @@ class User < ApplicationRecord
               source: :user
 
        def friendship_with(other_user)
-       friendships.find_by(friend: other_user) || 
-       friendships.find_by(user: other_user)
+              friendships.find_by(friend: other_user) || 
+              friendships.find_by(user: other_user)
        end
+       def all_friends
+              accepted_friends = friendships.accepted.map(&:friend)
+              accepted_received = received_friendships.accepted.map(&:user)
+              accepted_friends + accepted_received
+            end
 end

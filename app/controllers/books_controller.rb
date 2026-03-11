@@ -1,10 +1,12 @@
 class BooksController < ApplicationController
     before_action :authenticate_user!
-    before_action :set_book, only: [:show, :edit, :update, :destroy, :toggle_lent]
+    before_action :set_book, only: %i[show edit update destroy lend ]
 
     def index
-        @my_books = current_user.books.where(lent_to_friend: [false, nil])
-        @lent_books = current_user.books.where(lent_to_friend: true)
+        @my_books = current_user.books.where(lent_to_user_id: nil, lent_to_name: nil)
+        @lent_books = current_user.books.where.not(lent_to_user_id: nil).or(
+            current_user.books.where.not(lent_to_name: nil)
+          )  
     end
 
     def show
@@ -33,9 +35,15 @@ class BooksController < ApplicationController
             render :edit, status: :unprocessable_entity
         end
     end
-
-    def toggle_lent
-        @book.update(lent_to_friend: !@book.lent_to_friend)
+    def lend
+        if params[:lent_to_user_id].present? || params[:lent_to_name].present?
+            @book.update(
+            lent_to_user_id: params[:lent_to_user_id],
+            lent_to_name: params[:lent_to_name]
+            )
+        else
+            @book.update(lent_to_user_id: nil, lent_to_name: nil)
+        end
         redirect_to books_path
     end
 

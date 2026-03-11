@@ -1,8 +1,10 @@
 <% path = user ? user_book_path(user, book) : book_path(book) %>
 
+<% cover = book.image.attached? ? url_for(book.image) : book.cover_url %>
+
 <%= link_to path, data: { turbo: false } do %>
   <div class="book-spine">
-    <img src="<%= book.cover_url %>" alt="<%= book.title %>" class="book-cover">
+    <img src="<%= cover %>" alt="<%= book.title %>" class="book-cover">
   </div>
   <div class="book-title-spine"><%= book.title %></div>
   <div class="book-author-spine"><%= book.author %></div>

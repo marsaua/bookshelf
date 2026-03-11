@@ -5,7 +5,7 @@
     <%= link_to "← Back to Shelf", books_path, class: "text-gray-400 text-sm hover:text-[#3b2a1a] transition" %>
   </header>
 
-  <div class="bg-white rounded-xl p-8 max-w-md shadow-sm border border-[#e0d0bc]">
+  <div class="bg-white rounded-xl p-8 shadow-sm border border-[#e0d0bc]">
     <%= form_with model: @book, data: { turbo: false } do |f| %>
 
       <%= f.hidden_field :title %>
@@ -16,7 +16,7 @@
       <div class="flex gap-3 mb-6">
         <input class="flex-1 border border-[#d4b896] rounded-lg px-4 py-2.5 text-sm bg-[#fdf8f3] text-[#3b2a1a] focus:border-[#a0714f] focus:outline-none transition"
                type="text" id="book-search" placeholder="Search by book title...">
-        <%= f.submit "Add to Shelf", class: "bg-[#3b2a1a] text-[#f5ede0] px-5 py-2.5 rounded-lg text-sm hover:bg-[#5a3e28] transition cursor-pointer" %>
+        <%= f.submit "Add to Shelf", class: "button button-primary" %>
       </div>
 
     <% end %>
@@ -27,16 +27,29 @@
 
   <h1 class="text-3xl font-bold text-[#3b2a1a]">Add a Custom Book</h1>
 
-  <div class="bg-white rounded-xl p-8 max-w-md shadow-sm border border-[#e0d0bc]">
-  <%= form_with model: @book, data: { turbo: false } do |f| %>
+  <div class="bg-white rounded-xl p-8 shadow-sm border border-[#e0d0bc]">
+  <%= form_with model: @book, data: { turbo: false }, multipart: true do |f| %>
+    <div>
+      <p> <%= f.label :title %></p>
+      <%= f.text_field :title %>
+    </div>
+    <div>
+      <p> <%= f.label :author %></p>
+      <%= f.text_field :author %>
+    </div>
 
-    <%= f.text_field :title %>
-    <%= f.text_field :author %>
-    <%= f.text_area :description %>
-    <%= f.file_field :cover, accept: "image/*" %>
+    <div>
+      <p> <%= f.label :description %></p>
+      <%= f.text_area :description %>
+    </div>
+
+    <div>
+      <p> <%= f.label :image %></p>
+      <%= f.file_field :image %>
+    </div>
 
     <div class="flex gap-3 mb-6">
-      <%= f.submit "Add to Shelf", class: "bg-[#3b2a1a] text-[#f5ede0] px-5 py-2.5 rounded-lg text-sm hover:bg-[#5a3e28] transition cursor-pointer" %>
+      <%= f.submit "Add to Shelf", class: "button button-primary" %>
     </div>
 
   <% end %>

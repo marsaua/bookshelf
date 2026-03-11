@@ -1,0 +1,34 @@
+<div id="lent-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+  <div class="bg-white rounded-xl p-8 w-full max-w-md shadow-xl">
+    <h2 class="text-xl font-bold mb-6">Lend a Book</h2>
+
+    <%= form_with url: lend_book_path(@book), method: :patch, data: { turbo: false } do |f| %>
+      <div class="flex flex-col gap-4">
+        <div>
+          <label class="text-sm mb-1 block">Friend from your list </label>
+          <%= f.select :lent_to_user_id,
+              current_user.all_friends.map { |f| [f.first_name + " " + f.last_name, f.id] },
+              { include_blank: "— Select a friend —" } %>
+        </div>
+
+        <div class="text-center text-sm text-gray-400">or</div>
+
+        <div>
+          <label class="text-sm mb-1 block">Someone else</label>
+          <%= f.text_field :lent_to_name, placeholder: "Enter their name" %>
+        </div>
+      </div>
+
+      <div class="flex gap-3 mt-6">
+        <%= f.submit "Lend", class: "button button-primary flex-1" %>
+        <button type="button" onclick="closeLentModal()" class="button button-secondary flex-1">Cancel</button>
+      </div>
+
+    <% end %>
+  </div>
+</div>
+
+<script type="module">
+  window.openLentModal = () => document.getElementById('lent-modal').classList.remove('hidden')
+  window.closeLentModal = () => document.getElementById('lent-modal').classList.add('hidden')
+</script>

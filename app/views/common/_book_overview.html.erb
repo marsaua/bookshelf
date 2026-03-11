@@ -5,7 +5,7 @@
             <p class="text-gray-500"><%= book.author %></p>
             <p class="text-gray-500"><%= book.description %></p>
             <p class="text-gray-500"><%= book.price %></p>
-            <% if book.lent_to_friend %>
+            <% if book.lent_to %>
                 <p class="text-">Book is lent</p>
             <% end %>
         </div>
@@ -15,13 +15,14 @@
         <div>
 
             <%= button_to "Delete", book_path(book), method: :delete %>
-            <% if @book.lent_to_friend %>
-                <%= button_to "Take back", toggle_lent_book_path(book), method: :patch %>
+            <% if @book.lent_to %>
+                <%= button_to "Take back", lend_book_path(book), method: :patch %>
             <% else %>
-                <%= button_to "Lend", toggle_lent_book_path(book), method: :patch %>
+                <button onclick="openLentModal()" class="button button-primary">Lend Book</button>
+                <%= render "common/lend_book_modal" %>
             <% end %>
             <%= button_to "Back", books_path, method: :get %>
         </div>
     <% else %>
-        <%= button_to "Lend", toggle_lent_book_path(book), method: :patch %>
+        # <%= button_to "Lend", lend_book_path(book), method: :patch %>
     <% end %>

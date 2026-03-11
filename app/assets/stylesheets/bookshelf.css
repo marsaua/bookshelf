@@ -20,6 +20,7 @@ html {
   main {
     max-width: 1280px;
     margin: 0 auto;
+    margin-top: 40px;
     padding-left: 50px;
     padding-right: 50px;
   }
@@ -119,6 +120,12 @@ html {
   
   
   /* -- Forms -- */
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
   
   .form-backgroung {
     padding: 2rem 3rem;
@@ -126,7 +133,7 @@ html {
     border: 1px solid #2E6F40;
     border-radius: 20px;
   }
-  input:not([type="submit"]) {
+  input:not([type="submit"]), textarea, select {
     height: 40px;
     padding-left: 16px;
     padding-right: 16px;
@@ -136,6 +143,9 @@ html {
     border: 1px solid #2E6F40;
     background: #ffffff;
     width: 100%;
+  }
+  textarea {
+    height: 120px;
   }
   
   /* -- User -- */

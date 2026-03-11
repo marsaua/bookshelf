@@ -26,7 +26,7 @@ Rails.application.routes.draw do
       get :search
     end
     member do
-      patch :toggle_lent
+      patch :lend
     end
   end
 
