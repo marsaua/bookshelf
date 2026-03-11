@@ -1,5 +1,4 @@
 class FriendshipsController < ApplicationController
-
     def create
         friendship = Friendship.new(
           user: current_user,
@@ -8,20 +7,18 @@ class FriendshipsController < ApplicationController
         )
         if friendship.save
             redirect_to users_path, alert: "Your request has been sent"
-          else
+        else
             redirect_to users_path, alert: friendship.errors.full_messages.first
-          end
-
+        end
       end
-    
+
       def update
         friendship = Friendship.find(params[:id])
         friendship.accepted!
       end
-    
+
       def destroy
         Friendship.find(params[:id]).destroy
         redirect_to users_path
       end
-
 end

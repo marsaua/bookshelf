@@ -6,7 +6,7 @@ class BooksController < ApplicationController
         @my_books = current_user.books.where(lent_to_user_id: nil, lent_to_name: nil)
         @lent_books = current_user.books.where.not(lent_to_user_id: nil).or(
             current_user.books.where.not(lent_to_name: nil)
-          )  
+          )
     end
 
     def show

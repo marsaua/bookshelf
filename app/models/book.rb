@@ -10,9 +10,8 @@ class Book < ApplicationRecord
     def lent?
         lent_to_user_id.present? || lent_to_name.present?
     end
-    
+
     def lent_to
         lent_to_user&.first_name || lent_to_name
     end
-
 end
