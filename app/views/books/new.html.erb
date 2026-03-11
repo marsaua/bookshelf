@@ -24,6 +24,26 @@
     <div id="search-results" class="flex flex-col gap-2"></div>
   </div>
 
+
+  <h1 class="text-3xl font-bold text-[#3b2a1a]">Add a Custom Book</h1>
+
+  <div class="bg-white rounded-xl p-8 max-w-md shadow-sm border border-[#e0d0bc]">
+  <%= form_with model: @book, data: { turbo: false } do |f| %>
+
+    <%= f.text_field :title %>
+    <%= f.text_field :author %>
+    <%= f.text_area :description %>
+    <%= f.file_field :cover, accept: "image/*" %>
+
+    <div class="flex gap-3 mb-6">
+      <%= f.submit "Add to Shelf", class: "bg-[#3b2a1a] text-[#f5ede0] px-5 py-2.5 rounded-lg text-sm hover:bg-[#5a3e28] transition cursor-pointer" %>
+    </div>
+
+  <% end %>
+
+  <div id="search-results" class="flex flex-col gap-2"></div>
+</div>
+
 </div>
 
 <script>
