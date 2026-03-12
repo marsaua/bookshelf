@@ -16,6 +16,9 @@ class GoogleBooksService
     response = Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
       http.get(uri.request_uri)
     end
+    
+    Rails.logger.debug "RESPONSE CODE: #{response.code}"
+    Rails.logger.debug "RESPONSE BODY: #{response.body}"
 
     data = JSON.parse(response.body)
 

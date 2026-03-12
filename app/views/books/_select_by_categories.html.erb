@@ -1,0 +1,6 @@
+<%= form_with url: books_path, method: :get, data: { turbo: false } do |f| %>
+    <%= f.select :category, @categories,
+        { include_blank: "All categories", selected: params[:category] },
+        class: "border border-[#d4b896] rounded-lg px-4 py-2.5 text-sm",
+        onchange: "this.form.submit()" %>
+  <% end %>

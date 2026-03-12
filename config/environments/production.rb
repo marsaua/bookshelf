@@ -84,7 +84,7 @@ Rails.application.configure do
   #   "example.com",     # Allow requests from example.com
   #   /.*\.example\.com/ # Allow requests from subdomains like `www.example.com`
   # ]
-  config.host_authorization = { exclude: ->(request) { true } }
+ config.host_authorization = { exclude: ->(request) { true } }
 
 
   #

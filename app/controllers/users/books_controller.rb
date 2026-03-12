@@ -5,6 +5,13 @@ module Users
       def index
         @user = User.find(params[:user_id])
         @books = @user.books
+        @categories = @books.where.not(category: nil).distinct.pluck(:category)
+
+        if params[:category].present?
+          @my_books = @my_books.where(category: params[:category])
+          @lent_books = @lent_books.where(category: params[:category])
+        end
+        
       end
 
       def show

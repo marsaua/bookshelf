@@ -3,10 +3,16 @@ class BooksController < ApplicationController
     before_action :set_book, only: %i[show edit update destroy lend ]
 
     def index
+        @categories = current_user.books.where.not(category: [nil, ""]).distinct.pluck(:category)
         @my_books = current_user.books.where(lent_to_user_id: nil, lent_to_name: nil)
         @lent_books = current_user.books.where.not(lent_to_user_id: nil).or(
             current_user.books.where.not(lent_to_name: nil)
           )
+
+        if params[:category].present?
+            @my_books = @my_books.where(category: params[:category])
+            @lent_books = @lent_books.where(category: params[:category])
+        end
     end
 
     def show

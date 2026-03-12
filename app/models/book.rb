@@ -1,8 +1,7 @@
 class Book < ApplicationRecord
     belongs_to :user
     belongs_to :lent_to_user, class_name: "User", foreign_key: "lent_to_user_id", optional: true
-
-
+        
     validates :title, presence: true
 
     has_one_attached :image

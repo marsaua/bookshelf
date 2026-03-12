@@ -11,26 +11,8 @@
   </header>
 
   <!-- My Books -->
-  <section>
-    <div class="flex items-center gap-3 mb-4">
-      <span class="text-2xl">📚</span>
-      <h2 class="text-lg text-[#5a3e28]">My Books</h2>
-      <span class="bg-[#d4a96a] text-[#3b2a1a] rounded-full w-6 h-6 flex items-center justify-center text-xs font-sans"><%= @my_books.count %></span>
-    </div>
-    <div class="shelf-container">
-      <div class="shelf-surface p-4 pb-0">
-        <% if @my_books.any? %>
-          <div class="books-row">
-            <% @my_books.each do |book| %>
-              <%= render 'books/book', book: book, user: nil %>
-            <% end %>
-          </div>
-        <% else %>
-          <p class="text-[#a08060] italic text-center py-8">No books yet. Add your first one!</p>
-        <% end %>
-      </div>
-    </div>
-  </section>
+
+  <%= render "books/books_list", books: @my_books, user: nil %>
 
   <section>
     <div class="flex items-center gap-3 mb-4">

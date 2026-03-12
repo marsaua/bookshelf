@@ -4,22 +4,5 @@
     <h1 class="text-3xl font-bold text-[#3b2a1a]"><%= @user.first_name %> <%= @user.last_name %>'s Bookshelf</h1> 
   </header>
 
-  <section>
-    <div class="shelf-container">
-      <div class="shelf-surface p-4 pb-0">
-        <% if @books.any? %>
-          <div class="books-row">
-            <% @books.each do |book| %>
-                <%= render 'books/book', book: book, user: @user %>
-            <% end %>
-          </div>
-        <% else %>
-          <p class="text-[#a08060] italic text-center py-8">No books yet.</p>
-        <% end %>
-      </div>
-    </div>
-  </section>
-
- 
-
+  <%= render "books/books_list", books: @books, user: @user %>
 </div>
