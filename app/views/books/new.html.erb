@@ -11,6 +11,7 @@
       <%= f.hidden_field :title %>
       <%= f.hidden_field :author %>
       <%= f.hidden_field :description %>
+      <%= f.hidden_field :category %>
       <%= f.hidden_field :cover_url %>
 
       <div class="flex gap-3 mb-6">
@@ -28,31 +29,7 @@
   <h1 class="text-3xl font-bold text-[#3b2a1a]">Add a Custom Book</h1>
 
   <div class="bg-white rounded-xl p-8 shadow-sm border border-[#e0d0bc]">
-  <%= form_with model: @book, data: { turbo: false }, multipart: true do |f| %>
-    <div>
-      <p> <%= f.label :title %></p>
-      <%= f.text_field :title %>
-    </div>
-    <div>
-      <p> <%= f.label :author %></p>
-      <%= f.text_field :author %>
-    </div>
-
-    <div>
-      <p> <%= f.label :description %></p>
-      <%= f.text_area :description %>
-    </div>
-
-    <div>
-      <p> <%= f.label :image %></p>
-      <%= f.file_field :image %>
-    </div>
-
-    <div class="flex gap-3 mb-6">
-      <%= f.submit "Add to Shelf", class: "button button-primary" %>
-    </div>
-
-  <% end %>
+  <%= render "books/book_form_custom" %>
 
   <div id="search-results" class="flex flex-col gap-2"></div>
 </div>

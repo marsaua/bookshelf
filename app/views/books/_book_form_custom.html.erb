@@ -1,0 +1,30 @@
+<%= form_with model: @book, data: { turbo: false } do |f| %>
+    <div>
+      <p> <%= f.label :title %></p>
+      <%= f.text_field :title %>
+    </div>
+    <div>
+      <p> <%= f.label :author %></p>
+      <%= f.text_field :author %>
+    </div>
+
+    <div>
+      <p> <%= f.label :category %></p>
+      <%= f.text_field :category %>
+    </div>
+
+    <div>
+      <p> <%= f.label :description %></p>
+      <%= f.text_area :description %>
+    </div>
+
+    <div>
+      <p> <%= f.label :image %></p>
+      <%= f.file_field :image %>
+    </div>
+
+    <div class="flex gap-3 mb-6">
+      <%= f.submit class: "button button-primary" %>
+    </div>
+
+  <% end %>

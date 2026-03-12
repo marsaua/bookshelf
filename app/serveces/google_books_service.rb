@@ -1,6 +1,5 @@
 require "net/http"
 require "json"
-require "openssl"
 
 class GoogleBooksService
   API_URL = "https://www.googleapis.com/books/v1/volumes"
@@ -14,14 +13,10 @@ class GoogleBooksService
       langRestrict: "en"
     )
 
-    http = Net::HTTP.new(uri.host, uri.port)
-    http.use_ssl = true
-    http.verify_mode = OpenSSL::SSL::VERIFY_PEER
+    response = Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
+      http.get(uri.request_uri)
+    end
 
-    request = Net::HTTP::Get.new(uri)
-    request["Referer"] = "http://localhost:3000"
-    response = http.request(request)
-    Rails.logger.debug "GOOGLE API RESPONSE: #{response.body}"
     data = JSON.parse(response.body)
 
     data["items"]&.map do |item|
@@ -31,7 +26,7 @@ class GoogleBooksService
         author: info["authors"]&.first,
         description: info["description"],
         image: info["imageLinks"]&.dig("thumbnail"),
-        genre: info["categories"]&.first
+        category: info["categories"]&.first
       }
     end
   end
