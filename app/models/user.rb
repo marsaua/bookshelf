@@ -29,4 +29,9 @@ class User < ApplicationRecord
               accepted_received = received_friendships.accepted.map(&:user)
               accepted_friends + accepted_received
        end
+       def friends
+              Friend.where("(user_id = ? OR friend_id = ?) AND status = 1", id, id)
+                    .map { |f| f.user_id == id ? f.friend_id : f.user_id }
+                    .then { |ids| User.where(id: ids) }
+       end
 end

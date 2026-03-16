@@ -42,6 +42,7 @@ class BooksController < ApplicationController
             render :edit, status: :unprocessable_entity
         end
     end
+    
     def lend
         if params[:lent_to_user_id].present? || params[:lent_to_name].present?
             @book.update(

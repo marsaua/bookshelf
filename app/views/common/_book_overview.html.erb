@@ -9,7 +9,7 @@
             <p class="text-gray-500"><%= book.description %></p>
             <p class="text-gray-500"><%= book.price %></p>
             <% if book.lent_to %>
-                <p class="text-">Book is lent</p>
+                <p class="font-bold">Book is lent to <%= book.lent_to %></p>
             <% end %>
         </div>
     </div>

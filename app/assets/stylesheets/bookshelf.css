@@ -37,6 +37,7 @@ html {
     position: absolute;
     top: 70px;
     right: 0;
+    z-index: 5;
     background: #ffffff;
     flex-direction: column;
     gap: 15px;
@@ -114,7 +115,7 @@ html {
     border-radius: 8px;
     font-size: 16px;
     font-weight: 500;
-    min-width: 200px;
+    min-width: 150px;
     transition: 500ms;
     white-space: nowrap;
     cursor: pointer;
@@ -172,7 +173,6 @@ html {
   
   .user-card {
     display: flex;
-    align-items: center;
     gap: 2rem;
     padding: 20px 40px;
     background: #e3fbe9;
@@ -298,6 +298,7 @@ html {
   
   .profile-wrapper:hover .profile-menu {
     opacity: 1;
+    display: flex;
     transform: translateY(0);
     pointer-events: all;
   }
@@ -315,6 +316,8 @@ html {
     z-index: 3;
     width: 100%;
     min-width: 300px;
+    flex-direction: column;
+    padding: 20px;
 
   }
   .color-red-700 {color: #b91c1c};
@@ -326,7 +329,7 @@ html {
     color: #3b2a1a;
     text-decoration: none;
     font-size: 14px;
-    transition: background 0.15s ease;
+    transition: 0.5s;
   }
   .profile-menu a:hover {
     background: #CFFFDC;

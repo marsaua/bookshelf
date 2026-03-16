@@ -14,7 +14,7 @@
       <%= f.hidden_field :category %>
       <%= f.hidden_field :cover_url %>
 
-      <div class="flex gap-3 mb-6">
+      <div class="flex gap-3 mb-6 flex-col xs:flex-row">
         <input class="flex-1 border border-[#d4b896] rounded-lg px-4 py-2.5 text-sm bg-[#fdf8f3] text-[#3b2a1a] focus:border-[#a0714f] focus:outline-none transition"
                type="text" id="book-search" placeholder="Search by book title...">
         <%= f.submit "Add to Shelf", class: "button button-primary" %>

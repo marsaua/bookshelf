@@ -6,8 +6,8 @@ class Friendship < ApplicationRecord
 
   validates :friend_id, uniqueness: { scope: :user_id }
 
-  def self.between(user, other_user)
-    find_by(user: user, friend: other_user) ||
-    find_by(user: other_user, friend: user)
+  def self.between(user_a, user_b)
+    where(user_id: user_a, friend_id: user_b)
+      .or(where(user_id: user_b, friend_id: user_a))
   end
 end

@@ -2,3 +2,6 @@
 @source "../../../app/views";
 @source "../../../app/javascript";
 
+@theme {
+    --breakpoint-xs: 35rem;
+}

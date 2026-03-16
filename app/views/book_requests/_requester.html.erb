@@ -1,5 +1,5 @@
 <% user=incoming_requst.requester %>
-<div class="user-card flex justify-between items-center">
+<div class="user-card flex flex-col md:flex-row justify-between items-start md:items-center">
     <div class="flex gap-4 items-center">
         <div class="avatar">
             <% if user.avatar.present? %>
@@ -13,7 +13,7 @@
             <p> Interests will be soon </p>
         </div>
     </div>
-    <div class="flex gap-4">
+    <div class="flex gap-4 flex-col xs:flex-row">
         <% if incoming_requst.status == 'pending' %>
             <%= link_to "Accept", accept_book_request_path(incoming_requst), data: { turbo_method: :patch }, class: "button button-primary" %>
             <%= link_to "Decline", decline_book_request_path(incoming_requst), data: { turbo_method: :patch }, class: "button button-secondary"  %>
