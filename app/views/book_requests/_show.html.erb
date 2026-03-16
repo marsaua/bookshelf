@@ -1,0 +1,6 @@
+<% if @incoming.select { |r| r.book_id == @book.id }.any? %>
+    <h3 class="heading-h3 mt-8">Requests for your books</h3>
+    <% @incoming.select { |r| r.book_id == @book.id }.each do |incoming_requst| %>
+        <%= render "book_requests/requester", incoming_requst: incoming_requst %>
+    <% end %>
+<% end %>

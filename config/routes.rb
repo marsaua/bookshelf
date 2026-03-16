@@ -30,5 +30,15 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :book_requests, only: %i[create index show] do
+      member do
+        patch :accept
+        patch :decline
+        patch :mark_lent
+      end
+    end
+
+
+
   resources :friends
 end

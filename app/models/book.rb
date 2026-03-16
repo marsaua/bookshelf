@@ -6,6 +6,8 @@ class Book < ApplicationRecord
 
     has_one_attached :image
 
+    has_many :book_requests, dependent: :destroy
+
     def lent?
         lent_to_user_id.present? || lent_to_name.present?
     end

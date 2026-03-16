@@ -1,16 +1,16 @@
 <section>
-<%= render "books/select_by_categories" %>
-<div class="shelf-container mt-6">
-  <div class="shelf-surface p-4 pb-0">
-    <% if books.any? %>
-      <div class="books-row">
-        <% books.each do |book| %>
-            <%= render 'books/book', book: book, user: @user %>
-        <% end %>
-      </div>
-    <% else %>
-      <p class="text-[#a08060] italic text-center py-8">No books yet.</p>
-    <% end %>
-  </div>
-</div>
+    <%= render "books/select_by_categories" %>
+    <div class="shelf-container mt-6">
+        <div class="shelf-surface p-4 pb-0">
+            <% if books.any? %>
+                <div class="books-row">
+                    <% books.each do |book| %>
+                        <%= render 'books/book', book: book, user: @user %>
+                    <% end %>
+                </div>
+            <% else %>
+                <p class="text-[#a08060] italic text-center py-8">No books yet.</p>
+            <% end %>
+        </div>
+    </div>
 </section>

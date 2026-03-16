@@ -1,0 +1,24 @@
+<% user=incoming_requst.requester %>
+<div class="user-card flex justify-between items-center">
+    <div class="flex gap-4 items-center">
+        <div class="avatar">
+            <% if user.avatar.present? %>
+                <%= image_tag user.avatar %>
+            <% else %>
+                <%= image_tag "default-avatar.jpg" %>
+            <% end %>
+        </div>
+        <div>
+            <p class="font-bold"> <%= user.first_name %> <%= user.last_name %> </p>
+            <p> Interests will be soon </p>
+        </div>
+    </div>
+    <div class="flex gap-4">
+        <% if incoming_requst.status == 'pending' %>
+            <%= link_to "Accept", accept_book_request_path(incoming_requst), data: { turbo_method: :patch }, class: "button button-primary" %>
+            <%= link_to "Decline", decline_book_request_path(incoming_requst), data: { turbo_method: :patch }, class: "button button-secondary"  %>
+        <% else %>
+            <p>Else</p>
+        <% end %>
+    </div>
+</div>

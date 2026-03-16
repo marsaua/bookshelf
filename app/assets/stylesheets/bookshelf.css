@@ -21,8 +21,27 @@ html {
     max-width: 1280px;
     margin: 0 auto;
     margin-top: 40px;
-    padding-left: 50px;
-    padding-right: 50px;
+    margin-bottom: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  @media(min-width: 781px) {
+    main{
+      padding-left: 50px;
+      padding-right: 50px;
+
+    }
+  }
+
+  .header-drop-menu {
+    position: absolute;
+    top: 70px;
+    right: 0;
+    background: #ffffff;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+    height: 100dvh;
   }
   
   /* ── Book card ─────────────────────────────────────── */
@@ -275,7 +294,6 @@ html {
 
 .profile-wrapper {
     position: relative;
-    display: inline-block;
   }
   
   .profile-wrapper:hover .profile-menu {
@@ -296,10 +314,13 @@ html {
     padding-top: 20px;
     z-index: 3;
     width: 100%;
+    min-width: 300px;
 
   }
+  .color-red-700 {color: #b91c1c};
+
   
-  .profile-menu a {
+  .profile-menu a, .profile-menu p  {
     display: block;
     padding: 10px 20px;
     color: #3b2a1a;

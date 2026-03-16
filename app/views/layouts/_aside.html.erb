@@ -1,4 +1,4 @@
-<header>
+<header class="header-desktop hidden md:block">
     <div class="flex justify-between items-center px-5 bg-white" style="height: 100px;" >
 
         <%= link_to books_path do %>
@@ -7,15 +7,59 @@
         <ul class="flex gap-8">
             <li class="header-item"><%= link_to  "My Friends", friends_path %></li>
             <li class="header-item"><%= link_to "All Users", users_path %></li>
-        </ul>
-        <div class="profile-wrapper">
-            <div class="flex gap-2 items-center">
-                <%= image_tag "user.svg", width: 30, height: 30, class:"profile-logo" %>
-                <p> <%= current_user.first_name %> <%= current_user.last_name %></p>
+            <div class="profile-wrapper" >
+                <p class="header-item profile-logo cursor-pointer"> Settings</p>
+
+                <div class="profile-menu">
+                    <p class="font-bold">Welcome, <%= current_user.first_name %> <%= current_user.last_name %></p>
+                    <%= link_to "Edit Profile", edit_user_registration_path %>
+                    <%= link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete } %>
+                </div>
             </div>
-            <div class="profile-menu">
-                <%= link_to "Edit Profile", edit_user_registration_path %>
-                <%= link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete } %>
+        </ul>
+        <%= link_to book_requests_path do %>
+        <div class="flex gap-8 items-center">
+            <div class="flex items-center gap-4" >
+                <div class="flex items-center">
+                    <%= image_tag "book-shelf.svg", width: 50, height: 50, class:"profile-logo" %>
+                    <%= image_tag "hand.svg", width: 40, height: 40, class:"profile-logo" %>
+                </div>
+                <p class="color-red-700 font-bold"><%= @incoming.length %></p>
+            </div>
+        </div>
+        <% end %>
+    </div>
+</header>
+
+
+<header class="header-mobile block md:hidden bg-white shadow-sm relative" data-controller="burger">
+    <div class="flex justify-between items-center px-5" style="height: 70px;">
+
+        <%= link_to books_path do %>
+        <%= image_tag "books.svg", width: 40, height: 40, class: "cursor-pointer" %>
+        <% end %>
+
+        <div class="flex gap-4">
+        
+            <%= link_to book_requests_path, class: "flex items-center gap-2" do %>
+                <div class="flex items-center">
+                    <%= image_tag "book-shelf.svg", width: 36, height: 36 %>
+                    <%= image_tag "hand.svg", width: 30, height: 30 %>
+                </div>
+                <p class="text-red-700 font-bold"><%= @incoming.length %></p>
+            <% end %>
+            <button data-action="click->burger#toggle" class="flex flex-col gap-1.5 p-2">
+                <span data-burger-target="line" class="block w-6 h-0.5 bg-gray-800 transition-all duration-300"></span>
+                <span data-burger-target="line" class="block w-6 h-0.5 bg-gray-800 transition-all duration-300"></span>
+                <span data-burger-target="line" class="block w-6 h-0.5 bg-gray-800 transition-all duration-300"></span>
+            </button>
+                
+            <div data-burger-target="menu" class="hidden header-drop-menu">
+                <p class="font-bold text-gray-700">Welcome, <%= current_user.first_name %> <%= current_user.last_name %></p>
+                <%= link_to "My Friends", friends_path, class: "header-item" %>
+                <%= link_to "All Users", users_path, class: "header-item" %>
+                <%= link_to "Edit Profile", edit_user_registration_path, class: "header-item" %>
+                <%= link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete }, class: "header-item text-red-500" %>
             </div>
         </div>
     </div>

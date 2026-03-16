@@ -3,6 +3,7 @@ class User < ApplicationRecord
               :recoverable, :rememberable, :validatable
 
        has_many :books, dependent: :destroy
+       
        has_many :friendships, dependent: :destroy
 
        has_many :friends,
@@ -15,14 +16,17 @@ class User < ApplicationRecord
        has_many :received_friends,
               through: :received_friendships,
               source: :user
+       
+       has_many :book_requests, foreign_key: :requester_id
 
        def friendship_with(other_user)
               friendships.find_by(friend: other_user) ||
               friendships.find_by(user: other_user)
        end
+
        def all_friends
               accepted_friends = friendships.accepted.map(&:friend)
               accepted_received = received_friendships.accepted.map(&:user)
               accepted_friends + accepted_received
-            end
+       end
 end

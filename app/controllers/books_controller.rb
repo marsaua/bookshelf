@@ -1,6 +1,7 @@
 class BooksController < ApplicationController
     before_action :authenticate_user!
     before_action :set_book, only: %i[show edit update destroy lend ]
+    before_action :set_book_owner, only: %i[show edit update destroy lend]
 
     def index
         @categories = current_user.books.where.not(category: [nil, ""]).distinct.pluck(:category)
@@ -25,7 +26,7 @@ class BooksController < ApplicationController
     def create
         @book = current_user.books.build(book_params)
         if @book.save
-            redirect_to books_path, notice: "Book added!"
+            redirect_to user_books_path, notice: "Book added!"
         else
             render :new, status: :unprocessable_entity
         end
@@ -72,5 +73,9 @@ class BooksController < ApplicationController
 
     def book_params
         params.require(:book).permit(:title, :author, :description, :cover_url, :image, :category)
+    end
+
+    def set_book_owner
+        @book_owner = @book.user_id == current_user.id
     end
 end
