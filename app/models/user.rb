@@ -3,7 +3,7 @@ class User < ApplicationRecord
               :recoverable, :rememberable, :validatable
 
        has_many :books, dependent: :destroy
-       
+
        has_many :friendships, dependent: :destroy
 
        has_many :friends,
@@ -16,8 +16,11 @@ class User < ApplicationRecord
        has_many :received_friends,
               through: :received_friendships,
               source: :user
-       
+
        has_many :book_requests, foreign_key: :requester_id
+
+       has_many :lent_books, foreign_key: :lender_id
+       has_many :borrowed_books, class_name: "LentBook", foreign_key: :borrower_id
 
        def friendship_with(other_user)
               friendships.find_by(friend: other_user) ||

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_13_075927) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_17_082319) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -56,8 +56,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_13_075927) do
     t.string "cover_url"
     t.datetime "created_at", null: false
     t.text "description"
-    t.string "lent_to_name"
-    t.integer "lent_to_user_id"
     t.decimal "price"
     t.string "title"
     t.datetime "updated_at", null: false
@@ -73,6 +71,20 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_13_075927) do
     t.integer "user_id", null: false
     t.index ["friend_id"], name: "index_friendships_on_friend_id"
     t.index ["user_id"], name: "index_friendships_on_user_id"
+  end
+
+  create_table "lent_books", force: :cascade do |t|
+    t.integer "book_id", null: false
+    t.integer "borrower_id"
+    t.string "borrower_name"
+    t.datetime "created_at", null: false
+    t.integer "lender_id", null: false
+    t.datetime "lent_at"
+    t.datetime "returned_at"
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_lent_books_on_book_id"
+    t.index ["borrower_id"], name: "index_lent_books_on_borrower_id"
+    t.index ["lender_id"], name: "index_lent_books_on_lender_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -97,4 +109,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_13_075927) do
   add_foreign_key "books", "users"
   add_foreign_key "friendships", "users"
   add_foreign_key "friendships", "users", column: "friend_id"
+  add_foreign_key "lent_books", "books"
+  add_foreign_key "lent_books", "users", column: "borrower_id"
+  add_foreign_key "lent_books", "users", column: "lender_id"
 end

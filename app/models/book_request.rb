@@ -7,5 +7,4 @@ class BookRequest < ApplicationRecord
   delegate :user, to: :book, prefix: :book
 
   validates :book_id, uniqueness: { scope: :requester_id, message: "You already requested this book." }
-
 end

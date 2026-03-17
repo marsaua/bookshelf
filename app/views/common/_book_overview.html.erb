@@ -8,16 +8,16 @@
             <p class="text-gray-500"><%= book.category %></p>
             <p class="text-gray-500"><%= book.description %></p>
             <p class="text-gray-500"><%= book.price %></p>
-            <% if book.lent_to %>
-                <p class="font-bold">Book is lent to <%= book.lent_to %></p>
+            <% if book.lent? %>
+                <p class="font-bold">Book is lent to <%= book.active_lent.borrower_display%></p>
             <% end %>
         </div>
     </div>
 
-    <% if @user.blank? %>
+    <% if @user.blank? && @book_owner %>
         <div class="flex gap-4 mt-4 mx-auto flex-col md:flex-row" >
 
-            <% if @book.lent_to %>
+            <% if book.lent? %>
                 <%= button_to "Take back", lend_book_path(book), method: :patch, class:"button button-primary" %>
             <% else %>
                 <button onclick="openLentModal()" class="button button-primary">Lend Book</button>
@@ -25,21 +25,25 @@
             <% end %>
             <%= link_to "Edit", edit_book_path(@book), class:"button button-secondary" %>
             <%= button_to "Delete", book_path(book), method: :delete, class:"button button-secondary" %>
-            </div>
-            <%= render "book_requests/show" %>
-            <% else %>
-                <% if @book_request %>
-                    <% if @book_request.status == "pending" %>
-                        <p class="pt-6" > You already asked this book. Please wait for the owner's decision. </p>
-                    <% elsif @book_request.status === "accepted" %>
-                        <p class="pt-6" >Owner accepted your request. Enjoy reading.</p>
-                    <% elsif @book_request.status === "declined" %>
-                        <p class="pt-6" >Owner declined your request. Please try again later.</p>
-                    <% end %>
-                <% else %>
-                <%= button_to "Ask to Lend", book_requests_path,
-                    params: { book_request: { book_id: book.id } },
-                    method: :post,
-                    class: "button button-primary" %>
-                <% end %>
+        </div>
+        <%= render "book_requests/show" %>
+
+    <% elsif @user.blank? && !@book_owner %>
+        <p>You took this book from <%= @borrowed_book.borrower.first_name %> <%= @borrowed_book.borrower.last_name %></p>
+
+    <% else %>
+        <% if @book_request %>
+            <% if @book_request.status == "pending" %>
+                <p class="pt-6" > You already asked this book. Please wait for the owner's decision. </p>
+            <% elsif @book_request.status === "accepted" %>
+                <p class="pt-6" >Owner accepted your request. Enjoy reading.</p>
+            <% elsif @book_request.status === "declined" %>
+                <p class="pt-6" >Owner declined your request. Please try again later.</p>
             <% end %>
+        <% else %>
+            <%= button_to "Ask to Lend", book_requests_path,
+                params: { book_request: { book_id: book.id } },
+                method: :post,
+                class: "button button-primary" %>
+        <% end %>
+    <% end %>

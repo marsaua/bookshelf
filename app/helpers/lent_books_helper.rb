@@ -1,0 +1,2 @@
+module LentBooksHelper
+end

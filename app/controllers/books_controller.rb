@@ -4,19 +4,20 @@ class BooksController < ApplicationController
     before_action :set_book_owner, only: %i[show edit update destroy lend]
 
     def index
-        @categories = current_user.books.where.not(category: [nil, ""]).distinct.pluck(:category)
-        @my_books = current_user.books.where(lent_to_user_id: nil, lent_to_name: nil)
-        @lent_books = current_user.books.where.not(lent_to_user_id: nil).or(
-            current_user.books.where.not(lent_to_name: nil)
-          )
+        @categories = current_user.books.where.not(category: [ nil, "" ]).distinct.pluck(:category)
+        @my_books = current_user.books.where.not(id: LentBook.active.select(:book_id))
+        @lent_books = current_user.books.where(id: LentBook.active.select(:book_id))
+        @my_lent_books = LentBook.where(lender_id: current_user.id)
+        @borrowed_books = LentBook.where(borrower_id: current_user.id)
 
         if params[:category].present?
-            @my_books = @my_books.where(category: params[:category])
-            @lent_books = @lent_books.where(category: params[:category])
+          @my_books = @my_books.where(category: params[:category])
+          @lent_books = @lent_books.where(category: params[:category])
         end
-    end
+      end
 
     def show
+        @borrowed_book = LentBook.find_by(borrower_id: current_user.id, book_id: @book.id)
     end
 
     def new
@@ -42,15 +43,18 @@ class BooksController < ApplicationController
             render :edit, status: :unprocessable_entity
         end
     end
-    
+
     def lend
         if params[:lent_to_user_id].present? || params[:lent_to_name].present?
-            @book.update(
-            lent_to_user_id: params[:lent_to_user_id],
-            lent_to_name: params[:lent_to_name]
-            )
+          LentBook.create(
+            book: @book,
+            lender: current_user,
+            borrower: User.find_by(id: params[:lent_to_user_id]),
+            borrower_name: params[:lent_to_name],
+            lent_at: Time.current
+          )
         else
-            @book.update(lent_to_user_id: nil, lent_to_name: nil)
+          @book.active_lent&.update(returned_at: Time.current)
         end
         redirect_to books_path
     end
@@ -69,8 +73,12 @@ class BooksController < ApplicationController
     private
 
     def set_book
-        @book = current_user.books.find(params[:id])
-    end
+        if action_name == "show"
+          @book = Book.find(params[:id])
+        else
+          @book = current_user.books.find(params[:id])
+        end
+      end
 
     def book_params
         params.require(:book).permit(:title, :author, :description, :cover_url, :image, :category)
