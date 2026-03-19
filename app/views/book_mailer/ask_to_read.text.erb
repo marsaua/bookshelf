@@ -1,0 +1,9 @@
+Hi, <%= @user.first_name %>!
+
+<%= @requester.first_name %> <%= @requester.last_name %> would like to borrow your book "<%= @book.title %>".
+
+You can review and accept the request here:
+http://<%= ENV['APP_HOST'] %>/books/<%= @book.id %>
+
+Best regards,
+Bookshelf Team

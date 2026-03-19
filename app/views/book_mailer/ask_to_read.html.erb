@@ -1,0 +1,8 @@
+<h1>Hi, <%= @user.first_name %>!</h1>
+
+<p><%= @requester.first_name %> <%= @requester.last_name %> would like to borrow your book <strong>"<%= @book.title %>"</strong>.</p>
+
+<p>You can review and accept the request here:</p>
+<a href="http://<%= ENV['APP_HOST'] %>/books/<%= @book.id %>">View Book Request</a>
+
+<p>Best regards,<br>Bookshelf Team</p>

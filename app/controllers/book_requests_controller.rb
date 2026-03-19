@@ -17,7 +17,7 @@ class BookRequestsController < ApplicationController
         @book_request.status = 0
         if @book_request.save
             @book = @book_request.book
-
+            BookMailer.ask_to_read(@book.user, @book_request).deliver_later
             redirect_to user_book_path(@book.user, @book), notice: "Request sent!"
         else
             redirect_back fallback_location: books_path,

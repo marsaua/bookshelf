@@ -7,8 +7,8 @@ class BooksController < ApplicationController
         @categories = current_user.books.where.not(category: [ nil, "" ]).distinct.pluck(:category)
         @my_books = current_user.books.where.not(id: LentBook.active.select(:book_id))
         @lent_books = current_user.books.where(id: LentBook.active.select(:book_id))
-        @my_lent_books = LentBook.where(lender_id: current_user.id)
-        @borrowed_books = LentBook.where(borrower_id: current_user.id)
+        @my_lent_books = LentBook.active.where(lender_id: current_user.id)
+        @borrowed_books = LentBook.active.where(borrower_id: current_user.id)
 
         if params[:category].present?
           @my_books = @my_books.where(category: params[:category])
@@ -55,7 +55,7 @@ class BooksController < ApplicationController
           )
         else
           @book.active_lent&.update(returned_at: Time.current)
-        end
+        end	
         redirect_to books_path
     end
 
