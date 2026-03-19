@@ -35,10 +35,19 @@
         <% if @book_request %>
             <% if @book_request.status == "pending" %>
                 <p class="pt-6" > You already asked this book. Please wait for the owner's decision. </p>
-            <% elsif @book_request.status === "accepted" %>
-                <p class="pt-6" >Owner accepted your request. Enjoy reading.</p>
+            <% elsif @book_request&.accepted?%>
+                <% if @book.lent? %>
+                    <p class="pt-6" >Owner accepted your request. Enjoy reading.</p>
+                <% else %>
+                    <p class="pt-6" >You have read this book, but you can ask it again.</p>
+                    <%= button_to "Ask to Lend", book_requests_path,
+                            params: { book_request: { book_id: book.id } },
+                            method: :post,
+                            class: "button button-primary" %>
+                <% end %>
             <% elsif @book_request.status === "declined" %>
                 <p class="pt-6" >Owner declined your request. Please try again later.</p>
+
             <% end %>
         <% else %>
             <%= button_to "Ask to Lend", book_requests_path,

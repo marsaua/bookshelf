@@ -27,7 +27,7 @@ class BooksController < ApplicationController
     def create
         @book = current_user.books.build(book_params)
         if @book.save
-            redirect_to user_books_path, notice: "Book added!"
+            redirect_to books_path, notice: "Book added!"
         else
             render :new, status: :unprocessable_entity
         end

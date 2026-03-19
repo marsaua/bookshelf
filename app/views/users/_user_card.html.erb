@@ -1,10 +1,10 @@
 <div class="user-card justify-between items-start md:items-center flex-col md:flex-row ">
     <div class="flex gap-4 items-center">
         <div class="avatar">
-            <% if user.avatar.present? %>
-            <%= image_tag user.avatar %>
+            <% if user.avatar.present? && user.avatar != "" %>
+                <%= image_tag user.avatar %>
             <% else %>
-            <%= image_tag "default-avatar.jpg" %>
+                <%= image_tag "default-avatar.jpg" %>
             <% end %>
         </div>
         <div>
