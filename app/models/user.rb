@@ -22,6 +22,8 @@ class User < ApplicationRecord
        has_many :lent_books, foreign_key: :lender_id
        has_many :borrowed_books, class_name: "LentBook", foreign_key: :borrower_id
 
+       has_one_attached :avatar
+
        def friendship_with(other_user)
               friendships.find_by(friend: other_user) ||
               friendships.find_by(user: other_user)

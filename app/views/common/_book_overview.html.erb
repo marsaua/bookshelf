@@ -35,7 +35,7 @@
         <% if @book_request %>
             <% if @book_request.status == "pending" %>
                 <p class="pt-6" > You already asked this book. Please wait for the owner's decision. </p>
-            <% elsif @book_request.status === "accepted" %>
+            <% elsif @book_request&.accepted? && @book.lent? %>
                 <p class="pt-6" >Owner accepted your request. Enjoy reading.</p>
             <% elsif @book_request.status === "declined" %>
                 <p class="pt-6" >Owner declined your request. Please try again later.</p>
