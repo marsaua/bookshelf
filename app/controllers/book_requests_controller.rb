@@ -9,6 +9,7 @@ class BookRequestsController < ApplicationController
 
     def show
         @incoming = BookRequest.where(book: current_user.books)
+        
     end
 
     def create

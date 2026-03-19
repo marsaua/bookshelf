@@ -45,9 +45,16 @@
                             method: :post,
                             class: "button button-primary" %>
                 <% end %>
-            <% elsif @book_request.status === "declined" %>
-                <p class="pt-6" >Owner declined your request. Please try again later.</p>
-
+            <% elsif @book_request.declined? %>
+                <p class="pt-6">Owner declined your request. Please try again later.</p>
+                <% if @book_request.can_request_again? %>
+                    <%= button_to "Ask to Lend", book_requests_path,
+                        params: { book_request: { book_id: book.id } },
+                        method: :post,
+                        class: "button button-primary" %>
+                <% else %>
+                    <p class="text-gray-400 text-sm">You can ask again <%= time_ago_in_words(@book_request.updated_at + 1.week) %> from now.</p>
+                <% end %>
             <% end %>
         <% else %>
             <%= button_to "Ask to Lend", book_requests_path,

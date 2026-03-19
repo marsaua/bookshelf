@@ -6,5 +6,13 @@ class BookRequest < ApplicationRecord
 
   delegate :user, to: :book, prefix: :book
 
-  validates :book_id, uniqueness: { scope: :requester_id, message: "You already requested this book." }
+  validates :book_id, uniqueness: { 
+    scope: :requester_id,
+    conditions: -> { pending },
+    message: "You already requested this book."
+  }
+
+  def can_request_again?
+    declined? && updated_at < 1.week.ago
+  end
 end
