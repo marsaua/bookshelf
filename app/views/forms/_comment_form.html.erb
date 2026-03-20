@@ -1,0 +1,6 @@
+<%= form_with url: comments_path, scope: :comment, method: :post, data: { turbo: false } do |f| %>
+    <%= f.hidden_field :book_id, value: @book.id %>
+    <%= f.hidden_field :user_id, value: current_user.id %>
+    <%= f.text_area :body, placeholder: "Your comment" %>
+    <%= f.submit "Leave a comment", class: "button button-primary" %>
+<% end %>
