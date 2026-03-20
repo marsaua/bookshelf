@@ -23,6 +23,7 @@ Rails.application.routes.draw do
 
   resources :comments
 
+  resources :ratings, only: %i[create update]
 
   resources :books do
     collection do

@@ -18,8 +18,6 @@ module Users
         @book = @user.books.find(params[:id])
         @book_request = BookRequest.where(book: @book, requester_id: current_user.id).order(created_at: :desc).first
         @comments = Comment.where(book_id: @book.id)
-
-
       end
     end
 end

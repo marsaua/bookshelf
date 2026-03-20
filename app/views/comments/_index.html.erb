@@ -3,6 +3,7 @@
         <% if !@comments.any? %>
             <p class="pb-4">No yet comments.</p>
         <% end %>
+         <%= render "ratings/rating", book: @book %>
         <%= render "comments/new" %>
 
         <div class="flex flex-col gap-4 my-6" > 
