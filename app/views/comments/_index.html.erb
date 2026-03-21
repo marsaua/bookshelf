@@ -1,0 +1,15 @@
+<div class="comments-block">
+        <h3 class="heading-h3 mt-6 mb-4">Comments</h3>
+        <% if !@comments.any? %>
+            <p class="pb-4">No yet comments.</p>
+        <% end %>
+         <%= render "ratings/rating", book: @book %>
+        <%= render "comments/new" %>
+
+        <div class="flex flex-col gap-4 my-6" > 
+            <% @comments&.each do |comment| %>
+                <%= render "comments/comment", comment: comment %>
+            <% end %>
+        </div>
+
+    </div>

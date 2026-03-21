@@ -1,0 +1,13 @@
+<div class="flex gap-1" id="stars_<%= book.id %>">
+  <% (1..5).each do |star| %>
+
+    <%= button_to rating_path_for(book, current_user, star), 
+        method: current_user_rating(book, current_user) ? :patch : :post,
+        params: { rating: { book_id: book.id, value: star } },
+        class: "text-2xl cursor-pointer bg-transparent border-none p-0" do %>
+      <span class="<%= star <= (current_user_rating(book, current_user)&.value || 0) ? 'text-yellow-400' : 'text-gray-300' %>">★</span>
+    <% end %>
+  <% end %>
+  <% user_rating = current_user.ratings.find_by(book: book) %>
+  <span class="ml-2 text-gray-500"><%= user_rating&.value || 'No rating' %></span>
+</div>

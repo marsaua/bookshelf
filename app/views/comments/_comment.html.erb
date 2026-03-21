@@ -1,0 +1,16 @@
+ <div class="flex gap-4 border-main px-8 py-4 ">
+    <div class= "pr-[16px] border-r border-[#2E6F40]" >
+        <p class="font-bold"><%= comment.user.first_name %> <%= comment.user.last_name %></p>
+
+        <p class="italic small-font"><%= time_ago_in_words(comment.created_at) %> ago</p>
+    </div>
+    <div>
+        <p><%= comment.body %></p>
+        <% if comment.user == current_user %>
+            <div class="mt-4 flex gap-4">
+                <%= render "comments/edit_comment_modal", comment: comment %>
+                <%= button_to "Delete", comment_path(comment), method: :delete, class: "" %>
+            </div>
+        <% end %>
+    </div>
+</div>

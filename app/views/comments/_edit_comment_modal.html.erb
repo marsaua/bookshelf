@@ -1,0 +1,19 @@
+<button onclick="openEditCommentModal(<%= comment.id %>)" class="font-bold">Edit</button>
+
+<div id="edit_comment_modal_<%= comment.id %>" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+  <div class="bg-white p-6 rounded-lg max-w-xl w-full mx-8">
+    <%= form_with url: comment_path(comment), scope: :comment, method: :put, data: { turbo: false } do |f| %>
+      <%= f.hidden_field :book_id, value: @book.id %>
+      <%= f.text_area :body, value: comment.body, placeholder: "Your comment" %>
+      <div class="flex gap-6"> 
+        <%= f.submit "Edit a comment", class: "button button-primary" %>
+        <button type="button" onclick="closeEditCommentModal(<%= comment.id %>)">Cancel</button>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script type="module">
+  window.openEditCommentModal = (id) => document.getElementById(`edit_comment_modal_${id}`).classList.remove('hidden')
+  window.closeEditCommentModal = (id) => document.getElementById(`edit_comment_modal_${id}`).classList.add('hidden')
+</script>

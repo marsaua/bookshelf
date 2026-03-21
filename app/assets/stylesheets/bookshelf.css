@@ -32,7 +32,10 @@ html {
 
     }
   }
-
+  .border-main {
+    border: 1px solid #2E6F40;
+    border-radius: 8px;
+  }
   .header-drop-menu {
     position: absolute;
     top: 70px;
@@ -93,6 +96,9 @@ html {
     font-size: 1rem;
     color: #253D2C;
   }
+  p.small-font {
+    font-size: 0.75rem;
+  }
   
   /* ── Books row ─────────────────────────────────────── */
   .books-row {
@@ -116,6 +122,7 @@ html {
     font-size: 16px;
     font-weight: 500;
     min-width: 150px;
+    max-width: max-content;
     transition: 500ms;
     white-space: nowrap;
     cursor: pointer;
@@ -156,8 +163,7 @@ html {
   }
   input:not([type="submit"]), textarea, select {
     height: 40px;
-    padding-left: 16px;
-    padding-right: 16px;
+    padding: 10px 16px;
     display: flex;
     align-items: center;
     border-radius: 8px;
@@ -176,7 +182,7 @@ html {
     gap: 2rem;
     padding: 20px 40px;
     background: #e3fbe9;
-    border-radius: 60px;
+    border-radius: 30px;
     border: 1px solid #2E6F40;
     margin-bottom: 30px;
     margin-top: 30px;
@@ -334,4 +340,10 @@ html {
   .profile-menu a:hover {
     background: #CFFFDC;
   }
-  
+  .comments-block {
+    margin-top: 60px;
+    background-color: rgba(255, 255, 255, 0.7);
+
+    border-radius: 24px;
+    padding: 30px;
+  }

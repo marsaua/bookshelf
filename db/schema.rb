@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_17_082319) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_20_074213) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -63,6 +63,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_17_082319) do
     t.index ["user_id"], name: "index_books_on_user_id"
   end
 
+  create_table "comments", force: :cascade do |t|
+    t.text "body"
+    t.integer "book_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["book_id"], name: "index_comments_on_book_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
   create_table "friendships", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.integer "friend_id", null: false
@@ -87,6 +97,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_17_082319) do
     t.index ["lender_id"], name: "index_lent_books_on_lender_id"
   end
 
+  create_table "ratings", force: :cascade do |t|
+    t.integer "book_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.integer "value"
+    t.index ["book_id"], name: "index_ratings_on_book_id"
+    t.index ["user_id"], name: "index_ratings_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "avatar"
     t.datetime "created_at", null: false
@@ -107,9 +127,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_17_082319) do
   add_foreign_key "book_requests", "books"
   add_foreign_key "book_requests", "users", column: "requester_id"
   add_foreign_key "books", "users"
+  add_foreign_key "comments", "books"
+  add_foreign_key "comments", "users"
   add_foreign_key "friendships", "users"
   add_foreign_key "friendships", "users", column: "friend_id"
   add_foreign_key "lent_books", "books"
   add_foreign_key "lent_books", "users", column: "borrower_id"
   add_foreign_key "lent_books", "users", column: "lender_id"
+  add_foreign_key "ratings", "books"
+  add_foreign_key "ratings", "users"
 end

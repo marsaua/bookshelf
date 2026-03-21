@@ -21,6 +21,10 @@ Rails.application.routes.draw do
 
   resources :friendships, only: %i[ create update destroy ]
 
+  resources :comments
+
+  resources :ratings, only: %i[create update]
+
   resources :books do
     collection do
       get :search
