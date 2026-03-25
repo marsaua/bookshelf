@@ -1,0 +1,38 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<div class="swiper">
+  <div class="swiper-wrapper">
+    <% @books.each do |book| %>
+      <div class="swiper-slide">
+        <%= render 'books/book', book: book, user: book.user %>
+      </div>
+    <% end %>
+  </div>
+  <div class="swiper-pagination"></div>
+</div>
+
+<h3 class="heading-h3 text-center">Best Books</h3>
+
+<div class="swiper">
+  <div class="swiper-wrapper">
+    <% @best_books.each do |book| %>
+      <div class="swiper-slide">
+        <%= render 'books/book', book: book, user: book.user %>
+      </div>
+    <% end %>
+  </div>
+  <div class=" mt-6"></div>
+</div>
+
+<script>
+  new Swiper('.swiper', {
+    slidesPerView: 4,
+    spaceBetween: 3,
+    autoplay: {
+      delay: 3000,
+    },
+    loop: true,
+    pagination: { el: '.swiper-pagination' },
+  });
+</script>

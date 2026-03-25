@@ -24,9 +24,7 @@
   </head>
 
   <body>
-    <% if current_user.present? %>
       <%= render "layouts/aside" %>
-    <% end %>
     <main class="mt-8">
       <% if notice %>
         <div class="flash flash-notice" id="flash-message"><%= notice %></div>

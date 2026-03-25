@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateLentBooks < ActiveRecord::Migration[8.1]
   def change
     create_table :lent_books do |t|

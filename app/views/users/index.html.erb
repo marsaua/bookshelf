@@ -1,5 +1,28 @@
-<div>
-    <% @users&.each do |user| %>
-        <%= render "users/user_card", user: user %>
-    <% end %>
+<div data-controller="tabs">
+  <!-- Tabs -->
+  <div class="flex border-b mb-4">
+    <button class="px-4 py-2"
+            data-tabs-target="tab"
+            data-action="click->tabs#switch">
+      My Friends
+    </button>
+    <button class="px-4 py-2"
+            data-tabs-target="tab"
+            data-action="click->tabs#switch">
+        All Users
+    </button>
+  </div>
+
+  <!-- Content -->
+  <div data-tabs-target="panel">
+    <%= render "friends/friend_list" %>
+  </div>
+  <div data-tabs-target="panel">
+    <h3 class="heading-h3">All Users</h3>
+    <div>
+        <% @users&.each do |user| %>
+            <%= render "users/user_card", user: user %>
+        <% end %>
+    </div>
+  </div>
 </div>
