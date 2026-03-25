@@ -1,16 +1,18 @@
-require "net/http"
-require "json"
+# frozen_string_literal: true
+
+require 'net/http'
+require 'json'
 
 class GoogleBooksService
-  API_URL = "https://www.googleapis.com/books/v1/volumes"
+  API_URL = 'https://www.googleapis.com/books/v1/volumes'
 
   def self.search(query)
     uri = URI(API_URL)
     uri.query = URI.encode_www_form(
       q: query,
-      key: ENV["GOOGLE_BOOKS_API_KEY"],
+      key: ENV.fetch('GOOGLE_BOOKS_API_KEY', nil),
       maxResults: 5,
-      langRestrict: "en"
+      langRestrict: 'en'
     )
 
     response = Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
@@ -22,14 +24,14 @@ class GoogleBooksService
 
     data = JSON.parse(response.body)
 
-    data["items"]&.map do |item|
-      info = item["volumeInfo"]
+    data['items']&.map do |item|
+      info = item['volumeInfo']
       {
-        title: info["title"],
-        author: info["authors"]&.first,
-        description: info["description"],
-        image: info["imageLinks"]&.dig("thumbnail"),
-        category: info["categories"]&.first
+        title: info['title'],
+        author: info['authors']&.first,
+        description: info['description'],
+        image: info['imageLinks']&.dig('thumbnail'),
+        category: info['categories']&.first
       }
     end
   end

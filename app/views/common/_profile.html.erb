@@ -1,6 +1,5 @@
 <% owner = user == current_user %>
-<h2 class="heading-h2">Profile</h2>
-<div class="w-full flex itemms-start md:items-center justify-between gap-4 flex-col md:flex-row">
+<div class="user-card w-full flex itemms-start md:items-center justify-between gap-4 flex-col md:flex-row">
     <div class="w-full flex items-center gap-4">
         <% if user.avatar.present? %>
             <%= image_tag user.avatar, class:"avatar-big" %>
@@ -15,12 +14,12 @@
             <%= link_to "Edit profile", class: "button button-primary" %>
         <% else %>
     </div>
-    
+
     <% friendship = Friendship.between(current_user, user) %>
-    
+
     <% if friendship %>
         <div class="flex gap-3 flex-col xs:flex-row">
-            <%= link_to "Look Friend's books", user_books_path(user), 
+            <%= link_to "Look Friend's books", user_books_path(user),
                 class: "button button-primary" %>
             <%= link_to "Delete friend", friendship_path(friendship),
                 data: { turbo_method: :delete }, class: "button button-secondary"  %>
