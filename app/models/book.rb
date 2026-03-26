@@ -2,8 +2,6 @@
 
 class Book < ApplicationRecord
   belongs_to :user
-  belongs_to :lent_to_user, class_name: 'User', foreign_key: 'lent_to_user_id', optional: true
-  after_update :update_book_lent_to, if: -> { accepted? && saved_change_to_status? }
 
   validates :title, presence: true
 
