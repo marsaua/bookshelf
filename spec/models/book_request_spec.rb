@@ -25,4 +25,22 @@ RSpec.describe BookRequest, type: :model do
       expect(new_request).to be_valid
     end
   end
+
+  describe '#can_request_again?' do
+    let(:book_request) { FactoryBot.create(:book_request, :declined) }
+
+    it 'returns true if declined more than a week ago' do
+      book_request.update(updated_at: 2.weeks.ago)
+      expect(book_request.can_request_again?).to be true
+    end
+
+    it 'returns false if declined less than a week ago' do
+      expect(book_request.can_request_again?).to be false
+    end
+
+    it 'returns false if not declined' do
+      book_request.update(status: :pending)
+      expect(book_request.can_request_again?).to be false
+    end
+  end
 end
