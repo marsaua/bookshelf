@@ -14,6 +14,15 @@ class BookRequestsController < ApplicationController
   end
 
   def create
+    case BookRequest.can_create?(book_request_params[:book_id], current_user)
+    when :pending
+      redirect_back fallback_location: books_path, alert: 'You already requested this book.' and return
+    when :wait
+      redirect_back fallback_location: books_path, alert: 'Please wait before requesting again.' and return
+    when :lent
+      redirect_back fallback_location: books_path, alert: 'Book is already lent.' and return
+    end
+
     @book_request = BookRequest.new(book_request_params)
     @book_request.requester = current_user
     @book_request.status = 0
@@ -22,8 +31,7 @@ class BookRequestsController < ApplicationController
       BookMailer.ask_to_read(@book.user, @book_request).deliver_later
       redirect_to user_book_path(@book.user, @book), notice: 'Request sent!'
     else
-      redirect_back fallback_location: books_path,
-                    alert: @book_request.errors.full_messages.join(', ')
+      redirect_back fallback_location: books_path, alert: @book_request.errors.full_messages.join(', ')
     end
   end
 
