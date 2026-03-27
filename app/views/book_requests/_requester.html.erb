@@ -1,7 +1,7 @@
 <% user=incoming_requst.requester %>
 <div class="user-card flex flex-col md:flex-row justify-between items-start md:items-center">
     <div class="flex gap-4 items-center">
-        <div class="avatar">
+        <div class="user-avatar">
             <% if user.avatar.present? %>
                 <%= image_tag user.avatar %>
             <% else %>

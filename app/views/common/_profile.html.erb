@@ -4,7 +4,7 @@
         <% if user.avatar.present? %>
             <%= image_tag user.avatar, class:"user-avatar" %>
         <% else %>
-            <%= image_tag "default-avatar.jpg", class:"avatar" %>
+            <%= image_tag "default-avatar.jpg", class:"user-avatar" %>
         <% end %>
         <div>
             <p><%= user.first_name %> <%= user.last_name %></p>
