@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 20_260_320_074_213) do
+ActiveRecord::Schema[8.1].define(version: 20_260_326_144_355) do
   create_table 'active_storage_attachments', force: :cascade do |t|
     t.bigint 'blob_id', null: false
     t.datetime 'created_at', null: false
@@ -105,7 +105,7 @@ ActiveRecord::Schema[8.1].define(version: 20_260_320_074_213) do
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.integer 'user_id', null: false
-    t.integer 'value'
+    t.integer 'value', null: false
     t.index ['book_id'], name: 'index_ratings_on_book_id'
     t.index ['user_id'], name: 'index_ratings_on_user_id'
   end

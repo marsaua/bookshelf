@@ -52,4 +52,6 @@ Rails.application.configure do
 
   # Raise error when a before_action's only/except options reference missing actions.
   config.action_controller.raise_on_missing_callback_actions = true
+
+  config.secret_key_base = 'test_secret_key_base_any_long_string_here'
 end

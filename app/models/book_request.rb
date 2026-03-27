@@ -17,4 +17,13 @@ class BookRequest < ApplicationRecord
   def can_request_again?
     declined? && updated_at < 1.week.ago
   end
+
+  def self.can_create?(book_id, requester)
+    existing = where(book_id: book_id, requester: requester).last
+    return :pending if existing&.pending?
+    return :wait if existing&.declined? && !existing.can_request_again?
+    return :lent if existing&.accepted? && Book.find(book_id).lent?
+
+    :ok
+  end
 end

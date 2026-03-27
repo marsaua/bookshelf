@@ -13,10 +13,8 @@
         <% end %>
     <% end %>
 
-    <% if @all_friends.present? %>
-        <h3 class="heading-h3">Your friends</h3>
-        <% @all_friends.each do |friendship| %>
-            <%= render "common/profile", user: friendship.friend %>
-        <% end %>
-    <% end %>
+    <% @all_friends.each do |friendship| %>
+        <% friend = friendship.user == current_user ? friendship.friend : friendship.user %>
+        <%= render "common/profile", user: friend %>
+      <% end %>
 </div>
