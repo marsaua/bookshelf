@@ -2,7 +2,7 @@
 <div class="user-card w-full flex itemms-start md:items-center justify-between gap-4 flex-col md:flex-row">
     <div class="w-full flex items-center gap-4">
         <% if user.avatar.present? %>
-            <%= image_tag user.avatar, class:"avatar-big" %>
+            <%= image_tag user.avatar, class:"user-avatar" %>
         <% else %>
             <%= image_tag "default-avatar.jpg", class:"avatar" %>
         <% end %>
@@ -18,7 +18,7 @@
     <% friendship = Friendship.between(current_user, user) %>
 
     <% if friendship %>
-        <div class="flex gap-3 flex-col xs:flex-row">
+        <div class="flex gap-3 flex-col xs:flex-row flex-wrap">
             <%= link_to "Look Friend's books", user_books_path(user),
                 class: "button button-primary" %>
             <%= link_to "Delete friend", friendship_path(friendship),

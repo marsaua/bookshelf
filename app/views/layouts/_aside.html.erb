@@ -1,11 +1,18 @@
 <header class="header-desktop hidden md:block">
-    <div class="flex justify-between items-center px-5 bg-white" style="height: 100px;" >
+    <div class="flex justify-between items-center px-5" style="height: 100px;" >
 
         <%= link_to root_path do %>
-            <%= image_tag "books.svg", width: 48, height: 48, class:"cursor-pointer" %>
+            <div class="flex items-center gap-2">
+                <%= image_tag "logo-2.png", width:"100", class:"cursor-pointer" %>
+                <div class="flex flex-col gap-0">
+                    <p class="text-gold uppercase text-[20px] leading-none">abrakadabra</p>
+                    <p class="text-gold uppercase font-[16px] leading-none">bookshelf</p>
+                </div>
+            </div>
         <% end %>
         <%if user_signed_in? %>
             <ul class="flex gap-8">
+                <li class="header-item"><%= link_to  "Home", root_path %></li>
                 <li class="header-item"><%= link_to  "My Books", books_path %></li>
                 <li class="header-item"><%= link_to "All Users", users_path %></li>
                 <div class="profile-wrapper" >
