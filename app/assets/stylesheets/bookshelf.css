@@ -89,6 +89,9 @@ main {
 .text-gold {
   color: #d4af37;
 }
+.background-gold {
+  background-color: #d4af37;
+}
 
 h1.heading-h1 {
   font-size: 3rem;
@@ -105,7 +108,8 @@ p {
 p.small-font {
   font-size: 0.75rem;
 }
-.header-desktop {
+.header-desktop,
+.header-mobile {
   background-color: #121e31;
 }
 

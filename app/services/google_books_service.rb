@@ -31,7 +31,10 @@ class GoogleBooksService
         author: info['authors']&.first,
         description: info['description'],
         image: info['imageLinks']&.dig('thumbnail'),
-        category: info['categories']&.first
+        category: info['categories']&.first,
+        publisher: info['publisher'],
+        language: info['language'],
+        pageCount: info['pageCount'] 
       }
     end
   end

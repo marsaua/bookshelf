@@ -13,6 +13,11 @@
       <%= f.hidden_field :description %>
       <%= f.hidden_field :category %>
       <%= f.hidden_field :cover_url %>
+      <%= f.hidden_field :page_count %>
+      <%= f.hidden_field :language %>
+      <%= f.hidden_field :publisher %>
+
+      
 
       <div class="flex gap-3 mb-6 flex-col xs:flex-row">
         <input class="flex-1 border border-[#d4b896] rounded-lg px-4 py-2.5 text-sm bg-[#fdf8f3] text-[#3b2a1a] focus:border-[#a0714f] focus:outline-none transition"
@@ -63,6 +68,11 @@
     document.querySelector('[name="book[author]"]').value = book.author
     document.querySelector('[name="book[description]"]').value = book.description
     document.querySelector('[name="book[cover_url]"]').value = book.image
+    document.querySelector('[name="book[category]"]').value = book.category || ''
+    document.querySelector('[name="book[category]"]').value = book.page_count || ''
+    document.querySelector('[name="book[category]"]').value = book.language || ''
+    document.querySelector('[name="book[category]"]').value = book.publisher || ''
+
     results.innerHTML = `
       <div class="flex items-center gap-3 p-3 rounded-lg bg-green-50 border border-green-200">
         <img src="${book.image || ''}" class="w-10 h-14 object-cover rounded-sm shrink-0" onerror="this.style.display='none'">
