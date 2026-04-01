@@ -92,6 +92,9 @@ main {
 .background-gold {
   background-color: #d4af37;
 }
+.background-light {
+  background-color: #e0e0e0;
+}
 
 h1.heading-h1 {
   font-size: 3rem;
@@ -219,7 +222,30 @@ textarea {
 .header-item {
   font-size: 20px;
   font-weight: 300;
-  color: #e0e0e0;
+  color: #2c2c2c;
+  @media (min-width: 781px) {
+    color: #e0e0e0;
+  }
+}
+
+.wooden-panel--top {
+  background-color: #5c3d1e;
+  border-top: 3px solid #3b2008;
+  height: 40px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+    2px 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.wood-panel--left {
+  border-left: 10px solid;
+}
+.wood-panel--right {
+  border-right: 10px solid;
+}
+.wood-panel--bottom {
+  border-bottom: 10px solid;
 }
 
 /* ── Site header ───────────────────────────────────── */

@@ -4,7 +4,6 @@ class CommentsController < ApplicationController
   before_action :set_comment, only: %i[edit update destroy]
 
   def index
-    @comments = Comment.find_by(book_id: @book.id)
   end
 
   def create
@@ -23,7 +22,7 @@ class CommentsController < ApplicationController
     if @comment.update(comment_params)
       redirect_to books_path
     else
-      render :edit, status: :unprocessable_entity
+      redirect_back fallback_location: books_path, alert: @comment.errors.full_messages.join(', ')
     end
   end
 
@@ -35,7 +34,7 @@ class CommentsController < ApplicationController
   private
 
   def set_comment
-    @comment = Comment.find(params[:id])
+    @comment = current_user.comments.find(params[:id])
   end
 
   def comment_params

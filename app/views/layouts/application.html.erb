@@ -25,14 +25,16 @@
 
   <body>
       <%= render "layouts/aside" %>
-    <main class="mt-8">
-      <% if notice %>
-        <div class="flash flash-notice" id="flash-message"><%= notice %></div>
-      <% end %>
-      <% if alert %>
-        <div class="flash flash-alert" id="flash-message"><%= alert %></div>
-      <% end %>
-      <%= yield %>
+    <main class="wooden-panel--top ">
+      <div class="mt-8" >
+        <% if notice %>
+          <div class="flash flash-notice" id="flash-message"><%= notice %></div>
+        <% end %>
+        <% if alert %>
+          <div class="flash flash-alert" id="flash-message"><%= alert %></div>
+        <% end %>
+        <%= yield %>
+      </div>
     </main>
   </body>
 </html>

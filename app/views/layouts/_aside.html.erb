@@ -41,7 +41,7 @@
 </header>
 
 
-<header class="header-mobile block md:hidden bg-white shadow-sm relative" data-controller="burger">
+<header class="header-mobile block md:hidden shadow-sm relative" data-controller="burger">
     <div class="flex justify-between items-center px-5" style="height: 70px;">
 
         <%= link_to root_path do %>
@@ -65,9 +65,9 @@
                     <p class="text-red-700 font-bold"><%= @incoming.length %></p>
                 <% end %>
                 <button data-action="click->burger#toggle" class="flex flex-col gap-1.5 p-2">
-                    <span data-burger-target="line" class="block w-6 h-0.5 background-gold  transition-all duration-300"></span>
-                    <span data-burger-target="line" class="block w-6 h-0.5 background-gold  transition-all duration-300"></span>
-                    <span data-burger-target="line" class="block w-6 h-0.5 background-gold  transition-all duration-300"></span>
+                    <span data-burger-target="line" class="block w-6 h-0.5 background-light  transition-all duration-300"></span>
+                    <span data-burger-target="line" class="block w-6 h-0.5 background-light  transition-all duration-300"></span>
+                    <span data-burger-target="line" class="block w-6 h-0.5 background-light  transition-all duration-300"></span>
                 </button>
 
                 <div data-burger-target="menu" class="hidden header-drop-menu">
