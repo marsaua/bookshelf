@@ -404,3 +404,8 @@ textarea {
   color: #2e6f40;
   cursor: default;
 }
+
+.swiper-pagination {
+  position: relative;
+  margin-top: 12px;
+}

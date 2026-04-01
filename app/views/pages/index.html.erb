@@ -7,9 +7,6 @@
 
     <section>
       <h3 class="heading-h3 text-center py-4">Books Added Recently</h3>
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-      <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
       <div class="swiper">
         <div class="swiper-wrapper">
           <% @books.each do |book| %>
@@ -37,23 +34,6 @@
       </div>
     </section>
 
-      <script>
-        new Swiper('.swiper', {
-          slidesPerView: 4,
-          spaceBetween: 3,
-          autoplay: {
-            delay: 3000,
-          },
-          loop: true,
-          pagination: { el: '.swiper-pagination' },
-        });
-      </script>
-      <style>
-        .swiper-pagination {
-          position: relative;
-          margin-top: 12px;
-        }
-      </style>
     <% else %>
       <div class="flex gap-2 justify-center">
           <%= link_to "Sign in", user_session_path, class:"button button-primary" %>
