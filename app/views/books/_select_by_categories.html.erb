@@ -1,6 +1,18 @@
-<%= form_with url: books_path, method: :get, data: { turbo: false } do |f| %>
-    <%= f.select :category, @categories,
-        { include_blank: "All categories", selected: params[:category] },
-        class: "border border-[#d4b896] rounded-lg px-4 py-2.5 text-sm",
-        onchange: "this.form.submit()" %>
-  <% end %>
+<div class="sidebar-section">
+  <h3 class="heading-h3 text-[#e0e0e0]">Categories</h3>
+  <hr class="border-t border-[#e0e0e0] my-2">
+  <ul class="flex flex-col gap-2">
+    <li class="text-[#e0e0e0]">
+      <%= link_to "All categories", books_path, class: "text-[#e0e0e0]" %>
+      (<%= @category_counts.values.sum %>)
+    </li>
+    <% @categories.each do |category| %>
+        <% if category != ''  %>
+            <li class="text-[#e0e0e0]">
+                <%= link_to category, books_path(category: category), class: "text-[#e0e0e0]" %>
+                (<%= @category_counts[category] || 0 %>)
+            </li>
+        <%end%>
+    <% end %>
+  </ul>
+</div>
