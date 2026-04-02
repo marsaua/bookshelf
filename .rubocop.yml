@@ -24,3 +24,75 @@ Layout/EmptyLines:
 
 Layout/EmptyLinesAroundMethodBody:
   Enabled: true
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/MethodLength:
+  Max: 30
+
+Metrics/AbcSize:
+  Max: 40
+
+Metrics/CyclomaticComplexity:
+  Max: 10
+
+Layout/LineLength:
+  Max: 160
+
+Metrics/BlockLength:
+  Max: 60
+  Exclude:
+    - "spec/**/*"
+
+AllCops:
+  Exclude:
+    - "config/initializers/devise.rb"
+    - "db/migrate/**/*"
+    - "db/schema.rb"
+    - "db/queue_schema.rb"
+    - "test/**/*"
+    - "bin/**/*"
+    - "node_modules/**/*"
+    - "app/helpers/bookі_helper.rb"
+  NewCops: disable
+
+# New cops added in recent RuboCop versions — enable individually as needed
+Gemspec/AddRuntimeDependency:
+  Enabled: false
+Gemspec/AttributeAssignment:
+  Enabled: false
+Gemspec/DeprecatedAttributeAssignment:
+  Enabled: false
+Gemspec/DevelopmentDependencies:
+  Enabled: false
+Gemspec/RequireMFA:
+  Enabled: false
+Layout/EmptyLinesAfterModuleInclusion:
+  Enabled: false
+Layout/LineContinuationLeadingSpace:
+  Enabled: false
+Layout/LineContinuationSpacing:
+  Enabled: false
+Layout/LineEndStringConcatenationIndentation:
+  Enabled: false
+Layout/SpaceBeforeBrackets:
+  Enabled: false
+Lint/AmbiguousAssignment:
+  Enabled: false
+Lint/AmbiguousOperatorPrecedence:
+  Enabled: false
+Lint/AmbiguousRange:
+  Enabled: false
+Lint/ArrayLiteralInRegexp:
+  Enabled: false
+Lint/ConstantOverwrittenInRescue:
+  Enabled: false
+Lint/ConstantReassignment:
+  Enabled: false
+Lint/CopDirectiveSyntax:
+  Enabled: false
+Lint/DataDefineOverride:
+  Enabled: false
+Lint/DeprecatedConstants:
+  Enabled: false

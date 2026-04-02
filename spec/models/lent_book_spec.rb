@@ -47,5 +47,4 @@ RSpec.describe LentBook, type: :model do
       end
     end
   end
-
 end

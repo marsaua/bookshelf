@@ -34,7 +34,7 @@ class GoogleBooksService
         category: info['categories']&.first,
         publisher: info['publisher'],
         language: info['language'],
-        pageCount: info['pageCount'] 
+        pageCount: info['pageCount']
       }
     end
   end

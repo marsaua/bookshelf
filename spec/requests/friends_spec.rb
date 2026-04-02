@@ -1,13 +1,14 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe "Friends", type: :request do
-
+RSpec.describe 'Friends', type: :request do
   let(:user) { FactoryBot.create(:user) }
   let(:other_user) { FactoryBot.create(:user) }
 
   before { sign_in user }
 
-  describe "GET /friends" do
+  describe 'GET /friends' do
     it 'returns 200' do
       get friends_path
       expect(response).to have_http_status(:ok)
@@ -32,41 +33,41 @@ RSpec.describe "Friends", type: :request do
     end
   end
 
-  describe "POST /friends" do
+  describe 'POST /friends' do
     context 'with valid params' do
       it 'creates a friendship' do
-        expect {
+        expect do
           post friendships_path, params: { friend_id: other_user.id }
-        }.to change(Friendship, :count).by(1)
-      end  
+        end.to change(Friendship, :count).by(1)
+      end
 
       it 'creates a friendship with pending status' do
-        post friendships_path, params: {friend_id: other_user.id}
+        post friendships_path, params: { friend_id: other_user.id }
         expect(Friendship.last.status).to eq('pending')
       end
 
       it 'do not create friendship with user more then once ' do
         FactoryBot.create(:friendship, user: user, friend: other_user)
-        expect{
-          post friendships_path, params: {friend_id: other_user.id}
-        }.not_to change(Friendship, :count)
+        expect do
+          post friendships_path, params: { friend_id: other_user.id }
+        end.not_to change(Friendship, :count)
       end
     end
     context 'with invalid params' do
       it 'does not create a friendship' do
-        expect {
-          post friendships_path, params: {friend_id: ""}
-      }.not_to change(Friendship, :count)
-      end 
+        expect do
+          post friendships_path, params: { friend_id: '' }
+        end.not_to change(Friendship, :count)
+      end
     end
   end
 
   describe 'DELETE /friends/:id' do
     it 'deletes the friendship' do
       friendship = FactoryBot.create(:friendship, user: user, friend: other_user)
-      expect {
+      expect do
         delete friendship_path(friendship)
-      }.to change(Friendship, :count).by(-1)
+      end.to change(Friendship, :count).by(-1)
     end
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe CommentsController, type: :request do
@@ -10,9 +12,9 @@ RSpec.describe CommentsController, type: :request do
   describe 'POST /comments' do
     context 'with valid params' do
       it 'creates a comment' do
-        expect {
+        expect do
           post comments_path, params: { comment: { body: 'Great book!', book_id: book.id } }
-        }.to change(Comment, :count).by(1)
+        end.to change(Comment, :count).by(1)
       end
 
       it 'redirects back' do
@@ -23,9 +25,9 @@ RSpec.describe CommentsController, type: :request do
 
     context 'with invalid params' do
       it 'does not create a comment' do
-        expect {
+        expect do
           post comments_path, params: { comment: { body: '', book_id: book.id } }
-        }.not_to change(Comment, :count)
+        end.not_to change(Comment, :count)
       end
     end
   end
@@ -33,9 +35,9 @@ RSpec.describe CommentsController, type: :request do
   describe 'DELETE /comments/:id' do
     it 'deletes the comment' do
       comment
-      expect {
+      expect do
         delete comment_path(comment)
-      }.to change(Comment, :count).by(-1)
+      end.to change(Comment, :count).by(-1)
     end
 
     it 'redirects to book path' do
