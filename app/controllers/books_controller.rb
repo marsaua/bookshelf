@@ -5,18 +5,20 @@ class BooksController < ApplicationController
   before_action :set_book, only: %i[show edit update destroy lend]
   before_action :set_book_owner, only: %i[show edit update destroy lend]
 
-  def index
-    @categories = current_user.books.where.not(category: [nil, '']).distinct.pluck(:category)
-    @my_books = current_user.books.where.not(id: LentBook.active.select(:book_id))
-    @lent_books = current_user.books.where(id: LentBook.active.select(:book_id))
-    @my_lent_books = LentBook.active.where(lender_id: current_user.id)
-    @borrowed_books = LentBook.active.where(borrower_id: current_user.id)
+def index
+  @my_books = current_user.books.where.not(id: LentBook.active.select(:book_id))
+  @lent_books = current_user.books.where(id: LentBook.active.select(:book_id))
+  @my_lent_books = LentBook.active.where(lender_id: current_user.id)
+  @borrowed_books = LentBook.active.where(borrower_id: current_user.id)
 
-    return unless params[:category].present?
+  @categories = @my_books.distinct.pluck(:category).compact
+  @category_counts = current_user.books.group(:category).where.not(id: LentBook.active.select(:book_id)).count
 
+  if params[:category].present?
     @my_books = @my_books.where(category: params[:category])
     @lent_books = @lent_books.where(category: params[:category])
   end
+end
 
   def show
     @borrowed_book = LentBook.find_by(borrower_id: current_user.id, book_id: @book.id)
@@ -85,7 +87,8 @@ class BooksController < ApplicationController
   end
 
   def book_params
-    params.require(:book).permit(:title, :author, :description, :cover_url, :image, :category, :publisher, :language, :page_count )
+    params.require(:book).permit(:title, :author, :description, :cover_url, :image, :category, :publisher, :language,
+                                 :page_count)
   end
 
   def set_book_owner

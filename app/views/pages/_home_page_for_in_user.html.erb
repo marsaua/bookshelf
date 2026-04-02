@@ -1,6 +1,3 @@
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
 <div class="swiper">
   <div class="swiper-wrapper">
     <% @books.each do |book| %>
@@ -25,14 +22,3 @@
   <div class=" mt-6"></div>
 </div>
 
-<script>
-  new Swiper('.swiper', {
-    slidesPerView: 4,
-    spaceBetween: 3,
-    autoplay: {
-      delay: 3000,
-    },
-    loop: true,
-    pagination: { el: '.swiper-pagination' },
-  });
-</script>

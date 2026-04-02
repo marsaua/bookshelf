@@ -1,19 +1,16 @@
-<div class="w-full flex flex-col gap-12">
+<div class="w-full flex flex-col md:flex-row">
 
-  <!-- Header -->
-  <header class="flex items-center justify-between gap-4 flex-col md:flex-row">
-    <h1 class="text-3xl font-bold text-[#3b2a1a]">My Bookshelf</h1>
-    <div class="flex items-center gap-4">
-      <%= link_to "+ Add Book", new_book_path, class: "button button-primary" %>
-    </div>
-    
-
+<header class="flex justify-between gap-4 flex-col md:flex-row header-desktop w-[30%] p-6 wood-panel--right ">
+  <div class="flex flex-col gap-4">
+  <%= render "books/select_by_categories" %>
+  </div>
   </header>
+  
+  <div class="w-full p-6 flex flex-col gap-6">
+    <h1 class="text-3xl font-bold text-[#3b2a1a]">My Bookshelf</h1>
+    <%= link_to "+ Add Book", new_book_path, class: "button button-primary" %>
+    <%= render "books/books_list", books: @my_books, user: nil %>
 
-  <!-- My Books -->
-
-  <%= render "books/books_list", books: @my_books, user: nil %>
-
-  <%= render "lent_books/index"%>
-
+    <%= render "lent_books/index"%>
+  </div>
 </div>

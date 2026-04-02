@@ -1,5 +1,5 @@
 html {
-  background-image: url("back-for-book.jpg");
+  background-image: url("books-background.jpg");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -10,25 +10,33 @@ html::after {
   content: "";
   position: fixed;
   inset: 0;
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.45);
   z-index: -1;
 }
 
 /* ── General ─────────────────────────────────────── */
 
 main {
-  max-width: 1280px;
   margin: 0 auto;
-  margin-top: 40px;
-  margin-bottom: 40px;
+  padding-bottom: 40px;
+}
+.section-paddings {
+  padding-top: 30px;
   padding-left: 20px;
   padding-right: 20px;
 }
 @media (min-width: 781px) {
-  main {
+  .section-paddings {
     padding-left: 50px;
     padding-right: 50px;
   }
+}
+
+.no-paddings {
+  padding: 0 !important;
+}
+.no-max-width {
+  max-width: 100% !important;
 }
 .border-main {
   border: 1px solid #2e6f40;
@@ -46,41 +54,18 @@ main {
   height: 100dvh;
 }
 
-/* ── Book card ─────────────────────────────────────── */
-.book-card {
-  width: 100px;
-  height: 148px;
-  box-shadow:
-    -2px 3px 8px rgba(0, 0, 0, 0.28),
-    inset -3px 0 6px rgba(0, 0, 0, 0.12);
-  transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease;
-}
-
-.book-card:hover {
-  transform: translateY(-6px);
-  box-shadow:
-    -2px 10px 20px rgba(0, 0, 0, 0.3),
-    inset -3px 0 6px rgba(0, 0, 0, 0.12);
-}
-
 /* ── Shelf surface & plank ─────────────────────────── */
 .shelf-surface {
-  background: linear-gradient(180deg, #f9f0e3 0%, #f0e0c8 100%);
-  border: 1px solid #d4b896;
   border-radius: 8px;
   min-height: 168px;
 }
 
 .shelf-surface--small {
   min-height: 128px;
-  background: linear-gradient(180deg, #f3ede6 0%, #e8dcd0 100%);
 }
 
 .shelf-plank {
   height: 16px;
-  background: linear-gradient(180deg, #a0714f 0%, #7d5232 100%);
   border-radius: 0 0 4px 4px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -119,12 +104,50 @@ p.small-font {
 /* ── Books row ─────────────────────────────────────── */
 .books-row {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 16px;
-
-  .book-card {
-    width: 100%;
+}
+.book-card {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  padding: 16px 10px;
+  gap: 10px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 500;
+  color: #253d2c;
+  text-decoration: none;
+  box-shadow:
+    -2px 3px 8px rgba(0, 0, 0, 0.28),
+    inset -3px 0 6px rgba(0, 0, 0, 0.12);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow:
+      -2px 10px 20px rgba(0, 0, 0, 0.3),
+      inset -3px 0 6px rgba(0, 0, 0, 0.12);
+  }
+  .book-cover {
+    width: 160px;
+    height: 240px;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+}
+.swiper-wrapper {
+  gap: 20px;
+  align-items: stretch;
+  .swiper-slide {
     height: auto;
+    .book-card {
+      height: 100%;
+    }
   }
 }
 .button {
@@ -229,23 +252,45 @@ textarea {
 }
 
 .wooden-panel--top {
-  background-color: #5c3d1e;
-  border-top: 3px solid #3b2008;
-  height: 40px;
+  border-top: 30px solid #5c3d1e;
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.1),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
-    2px 2px 8px rgba(0, 0, 0, 0.4);
+    inset 0 2px 0 rgba(255, 255, 255, 0.12),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.35),
+    0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+/* ── Wooden frame around page content ──────────────── */
+.wooden-frame {
+  border-left: 30px solid #5c3d1e;
+  border-right: 30px solid #5c3d1e;
+  border-bottom: 30px solid #5c3d1e;
+  box-shadow:
+    inset 2px 0 0 rgba(255, 255, 255, 0.1),
+    inset -2px 0 0 rgba(255, 255, 255, 0.1),
+    inset 0 -2px 0 rgba(255, 255, 255, 0.1),
+    -4px 0 10px rgba(0, 0, 0, 0.25),
+    4px 0 10px rgba(0, 0, 0, 0.25),
+    0 6px 14px rgba(0, 0, 0, 0.3);
+  border-radius: 0 0 6px 6px;
+  background: linear-gradient(180deg, #f9f0e3 0%, #f0e0c8 100%);
 }
 
 .wood-panel--left {
-  border-left: 10px solid;
+  border-left: 14px solid #5c3d1e;
 }
 .wood-panel--right {
-  border-right: 10px solid;
+  border-right: 30px solid #5c3d1e;
+  box-shadow:
+    inset 2px 0 0 rgba(255, 255, 255, 0.1),
+    inset -2px 0 0 rgba(255, 255, 255, 0.1),
+    inset 0 -2px 0 rgba(255, 255, 255, 0.1),
+    -4px 0 10px rgba(0, 0, 0, 0.25),
+    4px 0 10px rgba(0, 0, 0, 0.25),
+    0 6px 14px rgba(0, 0, 0, 0.3);
+  border-radius: 0 0 6px 6px;
 }
 .wood-panel--bottom {
-  border-bottom: 10px solid;
+  border-bottom: 14px solid #5c3d1e;
 }
 
 /* ── Site header ───────────────────────────────────── */
@@ -262,7 +307,7 @@ textarea {
 }
 
 .header-inner {
-  max-width: 1280px;
+  /* max-width: 1280px; */
   margin: 0 auto;
   padding: 0 50px;
   height: 72px;
@@ -403,4 +448,9 @@ textarea {
   border-bottom: 2px solid #2e6f40;
   color: #2e6f40;
   cursor: default;
+}
+
+.swiper-pagination {
+  position: relative;
+  margin-top: 12px;
 }

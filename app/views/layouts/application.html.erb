@@ -20,21 +20,27 @@
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag "tailwind", "bookshelf", "data-turbo-track": "reload" %>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
-      <%= render "layouts/aside" %>
-    <main class="wooden-panel--top ">
-      <div class="mt-8" >
-        <% if notice %>
-          <div class="flash flash-notice" id="flash-message"><%= notice %></div>
-        <% end %>
-        <% if alert %>
-          <div class="flash flash-alert" id="flash-message"><%= alert %></div>
-        <% end %>
-        <%= yield %>
-      </div>
-    </main>
+    <%= render "layouts/aside" %>
+    <main class="wooden-panel--top no-paddings">
+    <section style="max-width: 1280px; margin: 0 auto">
+    <div class="wooden-frame mx-auto min-h-screen">
+        <div>
+          <% if notice %>
+            <div class="flash flash-notice" id="flash-message"><%= notice %></div>
+          <% end %>
+          <% if alert %>
+            <div class="flash flash-alert" id="flash-message"><%= alert %></div>
+          <% end %>
+          <%= yield %>
+        </div>
+        </div>
+      </section>
+      </main>
   </body>
 </html>

@@ -1,7 +1,7 @@
 <header class="header-desktop hidden md:block">
     <div class="flex justify-between items-center px-5" style="height: 100px;" >
 
-        <%= link_to root_path do %>
+        <%= link_to books_path do %>
             <div class="flex items-center gap-2">
                 <%= image_tag "logo-2.png", width:"100", class:"cursor-pointer" %>
                 <div class="flex flex-col gap-0">
@@ -12,8 +12,8 @@
         <% end %>
         <%if user_signed_in? %>
             <ul class="flex gap-8">
-                <li class="header-item"><%= link_to  "Home", root_path %></li>
-                <li class="header-item"><%= link_to  "My Books", books_path %></li>
+            <li class="header-item"><%= link_to  "My Books", books_path %></li>
+            <li class="header-item"><%= link_to  "What's new", root_path %></li>
                 <li class="header-item"><%= link_to "All Users", users_path %></li>
                 <div class="profile-wrapper" >
                     <p class="header-item profile-logo cursor-pointer"> Settings</p>

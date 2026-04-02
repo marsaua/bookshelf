@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe BooksController, type: :request do
@@ -47,9 +49,9 @@ RSpec.describe BooksController, type: :request do
   describe 'POST /books' do
     context 'with valid params' do
       it 'creates a book' do
-        expect {
+        expect do
           post books_path, params: { book: { title: 'Test Book', author: 'Author' } }
-        }.to change(Book, :count).by(1)
+        end.to change(Book, :count).by(1)
       end
 
       it 'redirects to book path' do
@@ -60,9 +62,9 @@ RSpec.describe BooksController, type: :request do
 
     context 'with invalid params' do
       it 'does not create a book' do
-        expect {
+        expect do
           post books_path, params: { book: { title: '' } }
-        }.not_to change(Book, :count)
+        end.not_to change(Book, :count)
       end
 
       it 'returns unprocessable entity' do
@@ -73,19 +75,19 @@ RSpec.describe BooksController, type: :request do
   end
   describe 'PATCH /books/:id' do
     let(:book) { FactoryBot.create(:book, user: user) }
-  
+
     context 'with valid params' do
       it 'updates the book' do
         patch book_path(book), params: { book: { title: 'New Title' } }
         expect(book.reload.title).to eq('New Title')
       end
-  
+
       it 'redirects to book path' do
         patch book_path(book), params: { book: { title: 'New Title' } }
         expect(response).to redirect_to(book_path(book))
       end
     end
-  
+
     context 'with invalid params' do
       it 'returns unprocessable entity' do
         patch book_path(book), params: { book: { title: '' } }
@@ -93,22 +95,22 @@ RSpec.describe BooksController, type: :request do
       end
     end
   end
-  
+
   describe 'DELETE /books/:id' do
     let!(:book) { FactoryBot.create(:book, user: user) }
-  
+
     it 'deletes the book' do
-      expect {
+      expect do
         delete book_path(book)
-      }.to change(Book, :count).by(-1)
+      end.to change(Book, :count).by(-1)
     end
-  
+
     it 'redirects to books path' do
       delete book_path(book)
       expect(response).to redirect_to(books_path)
     end
   end
-  
+
   describe 'GET /books/search' do
     it 'returns empty array for blank query' do
       get search_books_path, params: { query: '' }
