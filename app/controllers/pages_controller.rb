@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class PagesController < ApplicationController
-  def index
+  def whats_new
     return unless user_signed_in?
 
     friend_ids = current_user.all_friends.map(&:id)

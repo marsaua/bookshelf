@@ -15,11 +15,14 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-  root 'pages#index'
+  root 'books#index'
 
   resources :users do
     resources :books, only: %i[index show], controller: 'users/books'
   end
+
+  get '/whats_new', to: 'pages#whats_new', as: :whats_new
+
 
   resources :friendships, only: %i[create update destroy]
 

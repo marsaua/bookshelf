@@ -13,7 +13,7 @@
         <%if user_signed_in? %>
             <ul class="flex gap-8">
             <li class="header-item"><%= link_to  "My Books", books_path %></li>
-            <li class="header-item"><%= link_to  "What's new", root_path %></li>
+            <li class="header-item"><%= link_to  "What's new", whats_new_path %></li>
                 <li class="header-item"><%= link_to "All Users", users_path %></li>
                 <div class="profile-wrapper" >
                     <p class="header-item profile-logo cursor-pointer"> Settings</p>
@@ -29,8 +29,7 @@
             <div class="flex gap-8 items-center">
                 <div class="flex items-center gap-4" >
                     <div class="flex items-center">
-                        <%= image_tag "book-shelf.svg", width: 50, height: 50, class:"profile-logo" %>
-                        <%= image_tag "hand.svg", width: 40, height: 40, class:"profile-logo" %>
+                        <%= image_tag "book-hand.png", width: 80, class:"profile-logo" %>
                     </div>
                     <p class="color-red-700 font-bold"><%= @incoming.length %></p>
                 </div>
@@ -59,8 +58,7 @@
 
                 <%= link_to book_requests_path, class: "flex items-center gap-2" do %>
                     <div class="flex items-center">
-                        <%= image_tag "book-shelf.svg", width: 36, height: 36 %>
-                        <%= image_tag "hand.svg", width: 30, height: 30 %>
+                    <%= image_tag "book-hand.png", width: 60, class:"profile-logo" %>
                     </div>
                     <p class="text-red-700 font-bold"><%= @incoming.length %></p>
                 <% end %>
