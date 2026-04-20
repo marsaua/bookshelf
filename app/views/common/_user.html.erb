@@ -1,6 +1,6 @@
 <div class="w-full flex items-center gap-4">
-    <% if user.avatar.present? %>
-        <%= image_tag user.avatar, class:"user-avatar" %>
+    <% if user.avatar.attached? %>
+        <%= image_tag url_for(user.avatar), class:"user-avatar" %>
     <% else %>
         <%= image_tag "default-avatar.jpg", class:"user-avatar" %>
     <% end %>

@@ -1,6 +1,7 @@
 <%= button_to "<- Back", books_path, method: :get, class: "text-left mb-6 cursor-pointer" %>
 <div class="flex gap-4 flex-col md:flex-row">
-        <%= image_tag book.cover_url, class: "h-[250px] object-contain" if book.cover_url.present? %>       
+        <% book_cover = book.image.attached? ? url_for(book.image) : book.cover_url %>
+        <%= image_tag book_cover, class: "h-[250px] object-contain" if book_cover.present? %>
 
         <div>
             <h1 class="text-2xl font-bold"><%= book.title %></h1>
