@@ -26,7 +26,7 @@
   </head>
 
   <body>
-    <%= render "layouts/aside" %>
+    <%= render "layouts/aside" %> 
 
     
     <main class="wooden-panel--top no-paddings relative">
@@ -34,10 +34,10 @@
         <% if notice || alert %>
           <div class="fixed top-4 inset-x-0 z-50 flex justify-center px-4 pointer-events-none">
             <% if notice %>
-              <div class="flash flash-notice pointer-events-auto" id="flash-message"><%= notice %></div>
+              <div class="flash flash-notice pointer-events-auto" data-controller="flash"><%= notice %></div>
             <% end %>
             <% if alert %>
-              <div class="flash flash-alert pointer-events-auto" id="flash-message"><%= alert %></div>
+              <div class="flash flash-alert pointer-events-auto" data-controller="flash"><%= alert %></div>
             <% end %>
           </div>
         <% end %>

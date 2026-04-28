@@ -1,4 +1,4 @@
-<div class="flex gap-1" id="stars_<%= book.id %>">
+<div class="flex gap-1 items-center" id="stars_<%= book.id %>">
   <% (1..5).each do |star| %>
 
     <%= button_to rating_path_for(book, current_user, star), 
