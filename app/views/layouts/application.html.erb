@@ -27,20 +27,26 @@
 
   <body>
     <%= render "layouts/aside" %>
+
+    <% if notice || alert %>
+      <div class="fixed top-4 inset-x-0 z-50 flex justify-center px-4 pointer-events-none">
+        <% if notice %>
+          <div class="flash flash-notice pointer-events-auto" id="flash-message"><%= notice %></div>
+        <% end %>
+        <% if alert %>
+          <div class="flash flash-alert pointer-events-auto" id="flash-message"><%= alert %></div>
+        <% end %>
+      </div>
+    <% end %>
+
     <main class="wooden-panel--top no-paddings">
-    <section style="max-width: 1280px; margin: 0 auto">
-    <div class="wooden-frame mx-auto min-h-screen">
-        <div>
-          <% if notice %>
-            <div class="flash flash-notice" id="flash-message"><%= notice %></div>
-          <% end %>
-          <% if alert %>
-            <div class="flash flash-alert" id="flash-message"><%= alert %></div>
-          <% end %>
-          <%= yield %>
-        </div>
+      <section style="max-width: 1280px; margin: 0 auto">
+        <div class="wooden-frame mx-auto min-h-screen">
+          <div>
+            <%= yield %>
+          </div>
         </div>
       </section>
-      </main>
+    </main>
   </body>
 </html>
