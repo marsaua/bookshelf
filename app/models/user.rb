@@ -29,6 +29,12 @@ class User < ApplicationRecord
 
   has_one_attached :avatar
 
+  def send_reset_password_instructions
+    token = set_reset_password_token
+    UserMailer.reset_password_instructions(self, token).deliver_later
+    token
+  end
+
   def friendship_with(other_user)
     friendships.find_by(friend: other_user) ||
       friendships.find_by(user: other_user)
