@@ -6,9 +6,9 @@
         <% end %>
     <% end %>
 
-    <% if @sent_requests_friends.present? %>
+    <% if @sent_requests.present? %>
         <h3 class="heading-h3">Friend request you sent</h3>
-        <% @sent_requests_friends.each do |sent_requests_friend| %>
+        <% @sent_requests.each do |sent_requests_friend| %>
             <%= render "friends/sent_requests_friend", sent_requests_friend: sent_requests_friend %>
         <% end %>
     <% end %>

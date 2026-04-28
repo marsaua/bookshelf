@@ -2,8 +2,7 @@
 
 class UsersController < ApplicationController
   def index
-    @users = User.where.not(id: current_user.id)
-                 .select(:id, :email, :avatar, :first_name, :last_name)
+    @users = User.where.not(id: current_user.id).includes(avatar_attachment: :blob)
     @received_requests = current_user.received_friendships.where(status: 0).includes(:user)
     @sent_requests = current_user.friendships.where(status: 0).includes(:friend)
 
@@ -12,6 +11,9 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
+    @user = User.includes(avatar_attachment: :blob).find(params[:id])
+    @friendship = Friendship.between(current_user, @user).first
+    @is_friend = @friendship&.accepted? || @user == current_user
+    @books = @user.books.includes(image_attachment: :blob) if @is_friend
   end
 end

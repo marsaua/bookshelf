@@ -41,7 +41,7 @@ class User < ApplicationRecord
   end
 
   def friends
-    Friend.where('(user_id = ? OR friend_id = ?) AND status = 1', id, id)
+    Friendship.where('(user_id = ? OR friend_id = ?) AND status = 1', id, id)
           .map { |f| f.user_id == id ? f.friend_id : f.user_id }
           .then { |ids| User.where(id: ids) }
   end

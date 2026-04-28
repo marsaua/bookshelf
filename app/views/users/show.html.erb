@@ -1,1 +1,47 @@
-<%= render "common/profile", user: @user %>
+<div class="section-paddings flex flex-col gap-8">
+
+  <div class="user-card w-full flex-col md:flex-row items-start md:items-center justify-between gap-6">
+    <div class="flex items-center gap-6">
+      <% if @user.avatar.attached? %>
+        <%= image_tag url_for(@user.avatar), class: "user-avatar" %>
+      <% else %>
+        <%= image_tag "default-avatar.jpg", class: "user-avatar" %>
+      <% end %>
+      <div class="flex flex-col gap-1">
+        <p class="text-xl font-bold"><%= @user.first_name %> <%= @user.last_name %></p>
+        <p><%= @user.email %></p>
+        <p class="small-font">Member since <%= @user.created_at.strftime("%B %Y") %></p>
+      </div>
+    </div>
+
+    <% unless @user == current_user %>
+      <div class="flex gap-2 flex-wrap items-center">
+        <% if @friendship&.accepted? %>
+          <span class="text-sm font-medium text-green-700">Your friend</span>
+          <%= link_to "Unfriend", friendship_path(@friendship), data: { turbo_method: :delete }, class: "button button-secondary" %>
+        <% elsif @friendship&.pending? %>
+          <% if @friendship.user == current_user %>
+            <span class="text-sm font-medium text-yellow-700">Request sent</span>
+            <%= link_to "Cancel", friendship_path(@friendship), data: { turbo_method: :delete }, class: "button button-secondary" %>
+          <% else %>
+            <span class="text-sm font-medium text-yellow-700">Wants to connect</span>
+            <%= link_to "Accept", friendship_path(@friendship), data: { turbo_method: :patch }, class: "button button-primary" %>
+            <%= link_to "Reject", friendship_path(@friendship), data: { turbo_method: :delete }, class: "button button-secondary" %>
+          <% end %>
+        <% else %>
+          <%= button_to "Add Friend", friendships_path, params: { friend_id: @user.id }, method: :post, class: "button button-primary" %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <div>
+    <h2 class="text-2xl font-bold mb-4"><%= @user.first_name %>'s Books</h2>
+    <% if @is_friend %>
+      <%= render "books/books_list", books: @books, user: @user %>
+    <% else %>
+      <p class="text-[#a08060] italic">Add <%= @user.first_name %> as a friend to see their books.</p>
+    <% end %>
+  </div>
+
+</div>

@@ -17,6 +17,7 @@ class FriendshipsController < ApplicationController
   def update
     friendship = Friendship.find(params[:id])
     friendship.accepted!
+    redirect_to users_path
   end
 
   def destroy

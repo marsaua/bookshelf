@@ -1,28 +1,26 @@
 <div data-controller="tabs" class="section-paddings">
-  <!-- Tabs -->
   <div class="flex border-b mb-4">
-    <button class="px-4 py-2"
+    <button class="px-4 py-2 active-tab"
             data-tabs-target="tab"
             data-action="click->tabs#switch">
       My Friends
     </button>
-    <button class="px-4 py-2"
+    <button class="px-4 py-2 tab"
             data-tabs-target="tab"
             data-action="click->tabs#switch">
-        All Users
+      All Users
     </button>
   </div>
 
-  <!-- Content -->
   <div data-tabs-target="panel">
     <%= render "friends/friend_list" %>
   </div>
-  <div data-tabs-target="panel">
+  <div data-tabs-target="panel" class="hidden">
     <h3 class="heading-h3">All Users</h3>
     <div>
-        <% @users&.each do |user| %>
-            <%= render "users/user_card", user: user %>
-        <% end %>
+      <% @users&.each do |user| %>
+        <%= render "users/user_card", user: user %>
+      <% end %>
     </div>
   </div>
 </div>

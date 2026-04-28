@@ -1,30 +1,35 @@
 <% owner = user == current_user %>
-<div class="user-card w-full flex itemms-start md:items-center justify-between gap-4 flex-col md:flex-row">
-    <div class="w-full flex items-center gap-4">
-        <% if user.avatar.attached? %>
-            <%= image_tag url_for(user.avatar), class:"user-avatar" %>
-        <% else %>
-            <%= image_tag "default-avatar.jpg", class:"user-avatar" %>
-        <% end %>
-        <div>
-            <p><%= user.first_name %> <%= user.last_name %></p>
-            <p><%= user.email %></p>
-        </div>
-        <% if owner %>
-            <%= link_to "Edit profile", class: "button button-primary" %>
-        <% else %>
-    </div>
-
-    <% friendship = Friendship.between(current_user, user) %>
-
-    <% if friendship %>
-        <div class="flex gap-3 flex-col xs:flex-row flex-wrap">
-            <%= link_to "Look Friend's books", user_books_path(user),
-                class: "button button-primary" %>
-            <%= link_to "Delete friend", friendship_path(friendship),
-                data: { turbo_method: :delete }, class: "button button-secondary"  %>
-            <% end %>
-        </div>
-
+<div class="user-card w-full flex items-start md:items-center justify-between gap-4 flex-col md:flex-row">
+  <div class="w-full flex items-center gap-4">
+    <% if user.avatar.attached? %>
+      <%= image_tag url_for(user.avatar), class: "user-avatar" %>
+    <% else %>
+      <%= image_tag "default-avatar.jpg", class: "user-avatar" %>
     <% end %>
+    <div>
+      <p><%= user.first_name %> <%= user.last_name %></p>
+      <p><%= user.email %></p>
+    </div>
+  </div>
+
+  <div class="flex gap-3 flex-col xs:flex-row flex-wrap">
+    <% if owner %>
+      <%= link_to "Edit profile", edit_user_registration_path, class: "button button-primary" %>
+    <% else %>
+      <% friendship = Friendship.between(current_user, user).first %>
+      <% if friendship&.accepted? %>
+        <%= link_to "View Books", user_books_path(user), class: "button button-primary" %>
+        <%= link_to "Unfriend", friendship_path(friendship), data: { turbo_method: :delete }, class: "button button-secondary" %>
+      <% elsif friendship&.pending? %>
+        <% if friendship.user == current_user %>
+          <%= link_to "Cancel Request", friendship_path(friendship), data: { turbo_method: :delete }, class: "button button-secondary" %>
+        <% else %>
+          <%= link_to "Accept", friendship_path(friendship), data: { turbo_method: :patch }, class: "button button-primary" %>
+          <%= link_to "Reject", friendship_path(friendship), data: { turbo_method: :delete }, class: "button button-secondary" %>
+        <% end %>
+      <% else %>
+        <%= button_to "Add Friend", friendships_path, params: { friend_id: user.id }, method: :post, class: "button button-primary" %>
+      <% end %>
+    <% end %>
+  </div>
 </div>

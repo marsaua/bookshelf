@@ -52,3 +52,13 @@ bin/rails db:create db:migrate db:seed
 - Devise test helpers are enabled for request specs via `config.include Devise::Test::IntegrationHelpers`
 - Use `let!` (eager) when a record must exist in the DB before the test runs (e.g., testing "already exists" scenarios). Use `let` (lazy) otherwise.
 - Factories live in `spec/factories/`. Traits exist for statuses (e.g., `:accepted` on friendships).
+
+## Rules
+
+- Never renumber existing enum values — `BookRequest`, `Friendship`, and `LentBook` persist integers to the DB. New states always append at the end of the hash.
+- Always go through `BookRequest.can_create?` before creating a request. Permission logic lives there, not in controllers.
+- `Book#cover_url` is a plain URL string (from Google Books). `Book#image` is an Active Storage attachment (Cloudinary). They are different fields — don't conflate them.
+- Use enum predicate methods (`request.accepted?`), not integer comparisons (`request.status == 1`).
+- Scope mutating book actions to `current_user.books.find(params[:id])`, not `Book.find`. The `show` action is the only exception.
+- In specs, use `let!` only when the record must exist before the test body runs. Use `let` otherwise.
+- Use `Friendship.between(a, b)` when checking if two users have any relationship — it handles both directions.

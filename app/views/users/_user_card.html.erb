@@ -1,27 +1,35 @@
-<div class="user-card justify-between items-start md:items-center flex-col md:flex-row ">
-    <div class="flex gap-4 items-center">
-        <div class="user-avatar">
-            <% if user.avatar.present? && user.avatar != "" %>
-                <%= image_tag user.avatar %>
-            <% else %>
-                <%= image_tag "default-avatar.jpg" %>
-            <% end %>
-        </div>
-        <div>
-            <p class="font-bold"> <%= user.first_name %> <%= user.last_name %> </p>
-            <p> Interests will be soon </p>
-        </div>
+<div class="user-card justify-between items-start md:items-center flex-col md:flex-row">
+  <%= link_to user_path(user), class: "flex gap-4 items-center flex-1 no-underline" do %>
+    <div class="user-avatar">
+      <% if user.avatar.attached? %>
+        <%= image_tag url_for(user.avatar) %>
+      <% else %>
+        <%= image_tag "default-avatar.jpg" %>
+      <% end %>
     </div>
     <div>
-        <% friendship = Friendship.between(current_user, user).first %>
-        <% if friendship %>
-        <% if friendship.accepted? %>
-            <%= button_to "Remove from friends", friendship_path(friendship), method: :delete, class: "color-red-700" %>
-        <% elsif friendship.pending? %>
-            <%= button_to "Cancel the request", friendship_path(friendship), method: :delete, class: "color-red-700" %>
-        <% end %>
-        <% else %>
-        <%= button_to "Become friends", friendships_path, params: { friend_id: user.id }, method: :post, class: "text-[#2E6F40]" %>
-        <% end %>
+      <p class="font-bold"><%= user.first_name %> <%= user.last_name %></p>
+      <p><%= user.email %></p>
     </div>
+  <% end %>
+
+  <div class="flex gap-2 flex-wrap items-center">
+    <% friendship = Friendship.between(current_user, user).first %>
+    <% if friendship&.accepted? %>
+      <span class="text-sm font-medium text-green-700">Your friend</span>
+      <%= link_to "View Books", user_books_path(user), class: "button button-primary" %>
+      <%= link_to "Unfriend", friendship_path(friendship), data: { turbo_method: :delete }, class: "button button-secondary" %>
+    <% elsif friendship&.pending? %>
+      <% if friendship.user == current_user %>
+        <span class="text-sm font-medium text-yellow-700">Request sent</span>
+        <%= link_to "Cancel", friendship_path(friendship), data: { turbo_method: :delete }, class: "button button-secondary" %>
+      <% else %>
+        <span class="text-sm font-medium text-yellow-700">Wants to connect</span>
+        <%= link_to "Accept", friendship_path(friendship), data: { turbo_method: :patch }, class: "button button-primary" %>
+        <%= link_to "Reject", friendship_path(friendship), data: { turbo_method: :delete }, class: "button button-secondary" %>
+      <% end %>
+    <% else %>
+      <%= button_to "Add Friend", friendships_path, params: { friend_id: user.id }, method: :post, class: "button button-primary" %>
+    <% end %>
+  </div>
 </div>
