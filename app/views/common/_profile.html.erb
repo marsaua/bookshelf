@@ -1,6 +1,6 @@
 <% owner = user == current_user %>
-<div class="user-card w-full flex items-start md:items-center justify-between gap-4 flex-col md:flex-row">
-  <div class="w-full flex items-center gap-4">
+<div class="user-card w-full flex items-start xs:items-center xs:justify-between gap-4 flex-col xs:flex-row">
+  <div class="w-full flex items-center gap-4  flex-col md:flex-row">
     <% if user.avatar.attached? %>
       <%= image_tag url_for(user.avatar), class: "user-avatar" %>
     <% else %>
@@ -8,11 +8,11 @@
     <% end %>
     <div>
       <p><%= user.first_name %> <%= user.last_name %></p>
-      <p><%= user.email %></p>
+      <!-- <p><%= user.email %></p> -->
     </div>
   </div>
 
-  <div class="flex gap-3 flex-col xs:flex-row flex-wrap">
+  <div class="flex gap-3 flex-col xs:flex-row flex-wrap justify-end w-full items-center ">
     <% if owner %>
       <%= link_to "Edit profile", edit_user_registration_path, class: "button button-primary" %>
     <% else %>

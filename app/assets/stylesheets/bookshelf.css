@@ -378,8 +378,8 @@ textarea {
 /* ── User avatar ───────────────────────────────────── */
 
 .user-avatar {
-  width: 120px;
-  height: 120px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   background: linear-gradient(
     135deg,
@@ -396,6 +396,10 @@ textarea {
   user-select: none;
   object-fit: cover;
   overflow: hidden;
+  @media (min-width: 728px) {
+    width: 120px;
+    height: 120px;
+  }
 }
 
 .user-avatar--lg {
