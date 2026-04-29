@@ -8,6 +8,7 @@ class FriendshipsController < ApplicationController
       status: :pending
     )
     if friendship.save
+      UserMailer.friendship_request(friendship.friend, current_user).deliver_later
       redirect_to users_path, alert: 'Your request has been sent'
     else
       redirect_to users_path, alert: friendship.errors.full_messages.first

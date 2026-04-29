@@ -24,5 +24,6 @@ class ApplicationController < ActionController::Base
     return unless current_user
 
     @incoming = BookRequest.where(book: current_user.books).pending
+    @pending_friend_requests = current_user.received_friendships.where(status: 0).count
   end
 end

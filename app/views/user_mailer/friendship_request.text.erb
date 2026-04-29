@@ -1,0 +1,9 @@
+Hi <%= @recipient.first_name %>!
+
+<%= @requester.first_name %> <%= @requester.last_name %> sent you a friend request on Bookshelf.
+
+You can accept or decline it here:
+http://<%= ENV['APP_HOST'] %>/users
+
+Best regards,
+Bookshelf Team
