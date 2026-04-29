@@ -15,12 +15,12 @@
 
     <div>
       <p> <%= f.label :page_count %></p>
-      <%= f.text_field :page_count %>
+      <%= f.number_field :page_count, min: 1 %>
     </div>
 
     <div>
       <p> <%= f.label :language %></p>
-      <%= f.text_field :language %>
+      <%= f.select :language, [["English", "en"], ["Ukrainian", "uk"], ["Other", "other"]], { include_blank: "Select language" } %>
     </div>
 
     <div>

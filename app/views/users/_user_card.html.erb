@@ -1,4 +1,5 @@
-<div class="user-card justify-between items-start md:items-center flex-col md:flex-row">
+<% friendship = Friendship.between(current_user, user).first %>
+<div class="user-card justify-between items-center flex-col xs:flex-row">
   <%= link_to user_path(user), class: "flex gap-4 items-center flex-1 no-underline" do %>
     <div class="user-avatar">
       <% if user.avatar.attached? %>
@@ -9,24 +10,29 @@
     </div>
     <div>
       <p class="font-bold"><%= user.first_name %> <%= user.last_name %></p>
-      <p><%= user.email %></p>
+      <% if friendship&.accepted? %>
+        <span class="text-sm font-medium text-green-700">Your friend</span>
+      <% elsif friendship&.pending? %>
+        <span class="text-sm font-medium text-yellow-700">Request sent</span>
+      <% end %>
     </div>
   <% end %>
 
   <div class="flex gap-2 flex-wrap items-center">
-    <% friendship = Friendship.between(current_user, user).first %>
     <% if friendship&.accepted? %>
-      <span class="text-sm font-medium text-green-700">Your friend</span>
-      <%= link_to "View Books", user_books_path(user), class: "button button-primary" %>
-      <%= link_to "Unfriend", friendship_path(friendship), data: { turbo_method: :delete }, class: "button button-secondary" %>
+      <div class="flex gap-2 flex-col md:flex-row ">
+        <%= link_to "View Books", user_books_path(user), class: "button button-primary" %>
+        <%= link_to "Unfriend", friendship_path(friendship), data: { turbo_method: :delete }, class: "button button-secondary" %>
+      </div>
     <% elsif friendship&.pending? %>
       <% if friendship.user == current_user %>
-        <span class="text-sm font-medium text-yellow-700">Request sent</span>
         <%= link_to "Cancel", friendship_path(friendship), data: { turbo_method: :delete }, class: "button button-secondary" %>
       <% else %>
         <span class="text-sm font-medium text-yellow-700">Wants to connect</span>
-        <%= link_to "Accept", friendship_path(friendship), data: { turbo_method: :patch }, class: "button button-primary" %>
-        <%= link_to "Reject", friendship_path(friendship), data: { turbo_method: :delete }, class: "button button-secondary" %>
+        <div class="flex gap-2 flex-col md:flex-row ">
+          <%= link_to "Accept", friendship_path(friendship), data: { turbo_method: :patch }, class: "button button-primary" %>
+          <%= link_to "Reject", friendship_path(friendship), data: { turbo_method: :delete }, class: "button button-secondary" %>
+        </div>
       <% end %>
     <% else %>
       <%= button_to "Add Friend", friendships_path, params: { friend_id: user.id }, method: :post, class: "button button-primary" %>
