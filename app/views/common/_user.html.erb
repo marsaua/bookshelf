@@ -1,4 +1,4 @@
-<div class="w-full flex items-center gap-4 flex-row md:flex-col">
+<div class="w-full flex items-center md:items-start gap-4 flex-row md:flex-col">
     <% if user.avatar.attached? %>
         <%= image_tag url_for(user.avatar), class:"user-avatar" %>
     <% else %>
