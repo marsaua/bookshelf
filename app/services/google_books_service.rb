@@ -39,7 +39,8 @@ class GoogleBooksService
         page_count: info['pageCount']
       }
     end
-  rescue JSON::ParserError, Net::OpenTimeout, Net::ReadTimeout => e
+  rescue JSON::ParserError, Net::OpenTimeout, Net::ReadTimeout,
+         Net::SocketError, Errno::ECONNREFUSED => e
     Rails.logger.error "GoogleBooksService failed: #{e.class} #{e.message}"
     []
   end
