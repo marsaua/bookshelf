@@ -6,9 +6,9 @@
      class="chat chat--<%= mode %>">
 
   <div class="chat__header">
-    <div class="flex flex-col gap-0.5">
+    <div class="flex flex-col gap-0.5 min-w-0">
       <span class="text-xs font-normal opacity-70">Chat about</span>
-      <span class="text-gold font-bold truncate max-w-[260px]">«<%= book.title %>»</span>
+      <span class="text-gold font-bold truncate max-w-[220px]">«<%= book.title %>»</span>
       <span class="text-xs opacity-70">with <%= other_user.first_name %> <%= other_user.last_name %></span>
     </div>
     <div class="chat__header-actions">
@@ -19,6 +19,28 @@
             <path d="M1.5 1h4a.5.5 0 0 1 0 1H2v3.5a.5.5 0 0 1-1 0V1.5A.5.5 0 0 1 1.5 1zm9 0a.5.5 0 0 1 .5.5V5a.5.5 0 0 1-1 0V2h-3.5a.5.5 0 0 1 0-1H11zm-9 9a.5.5 0 0 1 .5.5V14h3.5a.5.5 0 0 1 0 1H1.5a.5.5 0 0 1-.5-.5v-4a.5.5 0 0 1 .5-.5zm13 0a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1 0-1H14v-3.5a.5.5 0 0 1 .5-.5z"/>
           </svg>
         <% end %>
+      <% end %>
+
+      <div class="chat__header-menu-wrapper" data-action="click->chat#toggleHeaderMenu">
+        <button class="chat__expand-btn" title="More options">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
+          </svg>
+        </button>
+        <div data-chat-target="headerMenu" class="chat__header-menu hidden"
+             data-user-id="<%= other_user.id %>" data-book-id="<%= book.id %>">
+          <button data-action="click->chat#deleteConversation" data-scope="for_me"
+                  class="chat__header-menu-item chat__header-menu-item--danger">
+            Delete for me
+          </button>
+          <button data-action="click->chat#deleteConversation" data-scope="for_all"
+                  class="chat__header-menu-item chat__header-menu-item--danger">
+            Delete for everyone
+          </button>
+        </div>
+      </div>
+
+      <% if mode == "modal" %>
         <button data-action="click->chat#close" class="chat__close-btn" title="Close">✕</button>
       <% end %>
     </div>
@@ -29,9 +51,38 @@
       <p class="text-center text-sm opacity-50 mt-auto pt-8">No messages yet. Say hello!</p>
     <% end %>
     <% messages.each do |msg| %>
-      <div class="message <%= msg.sender_id == current_user.id ? 'mine' : 'theirs' %>">
+      <div class="message <%= msg.sender_id == current_user.id ? 'mine' : 'theirs' %>"
+           data-message-id="<%= msg.id %>">
         <span class="message__name"><%= msg.sender.first_name %></span>
-        <p class="message__body"><%= msg.body %></p>
+        <div class="message__bubble-row">
+          <% if msg.sender_id == current_user.id %>
+            <div class="message__menu-wrapper" data-action="click->chat#toggleMessageMenu">
+              <button class="message__menu-btn">⋮</button>
+              <div class="message__menu hidden"
+                   data-message-id="<%= msg.id %>"
+                   data-is-sender="true">
+                <button data-action="click->chat#deleteMessage"
+                        data-message-id="<%= msg.id %>" data-scope="for_me"
+                        class="message__menu-item">Delete for me</button>
+                <button data-action="click->chat#deleteMessage"
+                        data-message-id="<%= msg.id %>" data-scope="for_all"
+                        class="message__menu-item message__menu-item--danger">Delete for everyone</button>
+              </div>
+            </div>
+          <% end %>
+          <p class="message__body"><%= msg.body %></p>
+          <% unless msg.sender_id == current_user.id %>
+            <div class="message__menu-wrapper" data-action="click->chat#toggleMessageMenu">
+              <button class="message__menu-btn">⋮</button>
+              <div class="message__menu hidden"
+                   data-message-id="<%= msg.id %>">
+                <button data-action="click->chat#deleteMessage"
+                        data-message-id="<%= msg.id %>" data-scope="for_me"
+                        class="message__menu-item">Delete for me</button>
+              </div>
+            </div>
+          <% end %>
+        </div>
         <span class="message__time"><%= msg.created_at.strftime("%H:%M") %></span>
       </div>
     <% end %>

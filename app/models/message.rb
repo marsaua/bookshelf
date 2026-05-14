@@ -8,6 +8,12 @@ class Message < ApplicationRecord
   validates :body, presence: true
 
   scope :unread_for, ->(user) { where(receiver_id: user.id, read: [false, nil]) }
+  scope :visible_for, lambda { |user|
+    where(
+      '(sender_id = ? AND deleted_by_sender = false) OR (receiver_id = ? AND deleted_by_receiver = false)',
+      user.id, user.id
+    )
+  }
 
   def self.conversation_between(user1_id, user2_id, book_id)
     where(book_id:)
@@ -19,7 +25,7 @@ class Message < ApplicationRecord
   end
 
   def self.conversations_for(user)
-    all_messages = where('sender_id = :id OR receiver_id = :id', id: user.id)
+    all_messages = visible_for(user)
                    .includes(:sender, :receiver, :book)
                    .order(created_at: :desc)
 

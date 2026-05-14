@@ -21,7 +21,7 @@
             <%= render "messages/chat",
                 other_user: @user,
                 book: @book,
-                messages: Message.conversation_between(current_user.id, @user.id, @book.id),
+                messages: Message.conversation_between(current_user.id, @user.id, @book.id).visible_for(current_user),
                 mode: "modal" %>
           </div>
         </div>
