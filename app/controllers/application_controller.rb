@@ -25,5 +25,6 @@ class ApplicationController < ActionController::Base
 
     @incoming = BookRequest.where(book: current_user.books).pending
     @pending_friend_requests = current_user.received_friendships.where(status: 0).count
+    @unread_messages_count = Message.unread_for(current_user).count
   end
 end

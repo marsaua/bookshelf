@@ -1,0 +1,44 @@
+<div <% if mode == "page" %>data-controller="chat"
+     data-chat-user-id-value="<%= other_user.id %>"
+     data-chat-book-id-value="<%= book.id %>"
+     data-chat-current-user-id-value="<%= current_user.id %>"
+     data-chat-mode-value="<%= mode %>"<% end %>
+     class="chat chat--<%= mode %>">
+
+  <div class="chat__header">
+    <div class="flex flex-col gap-0.5">
+      <span class="text-xs font-normal opacity-70">Chat about</span>
+      <span class="text-gold font-bold truncate max-w-[260px]">«<%= book.title %>»</span>
+      <span class="text-xs opacity-70">with <%= other_user.first_name %> <%= other_user.last_name %></span>
+    </div>
+    <div class="chat__header-actions">
+      <% if mode == "modal" %>
+        <%= link_to messages_path(user_id: other_user.id, book_id: book.id),
+            class: "chat__expand-btn", title: "Open full page" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M1.5 1h4a.5.5 0 0 1 0 1H2v3.5a.5.5 0 0 1-1 0V1.5A.5.5 0 0 1 1.5 1zm9 0a.5.5 0 0 1 .5.5V5a.5.5 0 0 1-1 0V2h-3.5a.5.5 0 0 1 0-1H11zm-9 9a.5.5 0 0 1 .5.5V14h3.5a.5.5 0 0 1 0 1H1.5a.5.5 0 0 1-.5-.5v-4a.5.5 0 0 1 .5-.5zm13 0a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1 0-1H14v-3.5a.5.5 0 0 1 .5-.5z"/>
+          </svg>
+        <% end %>
+        <button data-action="click->chat#close" class="chat__close-btn" title="Close">✕</button>
+      <% end %>
+    </div>
+  </div>
+
+  <div data-chat-target="messages" class="chat__messages">
+    <% if messages.empty? %>
+      <p class="text-center text-sm opacity-50 mt-auto pt-8">No messages yet. Say hello!</p>
+    <% end %>
+    <% messages.each do |msg| %>
+      <div class="message <%= msg.sender_id == current_user.id ? 'mine' : 'theirs' %>">
+        <span class="message__name"><%= msg.sender.first_name %></span>
+        <p class="message__body"><%= msg.body %></p>
+        <span class="message__time"><%= msg.created_at.strftime("%H:%M") %></span>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="chat__footer">
+    <input data-chat-target="input" data-action="keydown.enter->chat#send" type="text" placeholder="Write a message..." autocomplete="off">
+    <button data-action="click->chat#send" class="chat__send-btn">Send</button>
+  </div>
+</div>

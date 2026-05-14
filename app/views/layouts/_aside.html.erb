@@ -22,6 +22,14 @@
                     </span>
                   <% end %>
                 </li>
+                <li class="header-item" style="position:relative;">
+                  <%= link_to "Messages", messages_path %>
+                  <% if @unread_messages_count&.> 0 %>
+                    <span style="position:absolute;top:-6px;right:-10px;background:#d4af37;color:#192a44;font-size:11px;font-weight:700;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;line-height:1;">
+                      <%= @unread_messages_count %>
+                    </span>
+                  <% end %>
+                </li>
                 <div class="profile-wrapper" >
                     <p class="header-item profile-logo cursor-pointer"> Settings</p>
 
@@ -79,6 +87,14 @@
                     <p class="font-bold text-gray-700">Welcome, <%= current_user.first_name %> <%= current_user.last_name %></p>
                     <%= link_to "My Books", books_path, class: "header-item" %>
                     <%= link_to "All Users", users_path, class: "header-item" %>
+                    <div class="flex items-center gap-2">
+                      <%= link_to "Messages", messages_path, class: "header-item" %>
+                      <% if @unread_messages_count&.> 0 %>
+                        <span style="background:#d4af37;color:#192a44;font-size:11px;font-weight:700;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;line-height:1;">
+                          <%= @unread_messages_count %>
+                        </span>
+                      <% end %>
+                    </div>
                     <%= link_to "Edit Profile", edit_user_registration_path, class: "header-item" %>
                     <%= link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete }, class: "header-item text-red-500" %>
                 </div>

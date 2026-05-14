@@ -1,0 +1,82 @@
+<div class="section-paddings">
+  <div class="flex items-center justify-between mb-8">
+    <h2 class="heading-h2">Messages</h2>
+    <% if @conversations.any? %>
+      <span class="text-sm opacity-50"><%= @conversations.count %> conversation<%= @conversations.count == 1 ? '' : 's' %></span>
+    <% end %>
+  </div>
+
+  <% if @conversations.empty? %>
+    <div class="inbox-empty">
+      <div class="inbox-empty__icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"/>
+        </svg>
+      </div>
+      <h3 class="inbox-empty__title">No messages yet</h3>
+      <p class="inbox-empty__subtitle">When someone writes to you about a book, it will appear here.</p>
+      <%= link_to "Browse books", root_path, class: "button button-primary mt-4" %>
+    </div>
+  <% else %>
+    <div class="conversations-list">
+      <% @conversations.each do |conv| %>
+        <% unread = conv[:unread_count] > 0 %>
+        <%= link_to messages_path(user_id: conv[:other_user].id, book_id: conv[:book].id),
+            class: "conversation-card #{unread ? 'conversation-card--unread' : ''}" do %>
+
+          <div class="conversation-card__book-cover">
+            <% cover = conv[:book].image.attached? ? url_for(conv[:book].image) : conv[:book].cover_url %>
+            <% if cover.present? %>
+              <%= image_tag cover, class: "conversation-card__book-img" %>
+            <% else %>
+              <div class="conversation-card__book-placeholder">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783"/>
+                </svg>
+              </div>
+            <% end %>
+          </div>
+
+          <div class="conversation-card__body">
+            <div class="conversation-card__meta">
+              <div class="conversation-card__user">
+                <% if conv[:other_user].avatar.attached? %>
+                  <%= image_tag url_for(conv[:other_user].avatar), class: "conversation-card__avatar" %>
+                <% else %>
+                  <div class="conversation-card__avatar conversation-card__avatar--initials">
+                    <%= conv[:other_user].first_name[0] %><%= conv[:other_user].last_name[0] %>
+                  </div>
+                <% end %>
+                <span class="conversation-card__name <%= 'font-bold' if unread %>">
+                  <%= conv[:other_user].first_name %> <%= conv[:other_user].last_name %>
+                </span>
+              </div>
+              <span class="conversation-card__time"><%= time_ago_in_words(conv[:last_message].created_at) %> ago</span>
+            </div>
+
+            <p class="conversation-card__book-title">
+              About: <span class="<%= 'font-semibold' if unread %>">«<%= conv[:book].title %>»</span>
+            </p>
+
+            <p class="conversation-card__preview <%= 'conversation-card__preview--unread' if unread %>">
+              <% if conv[:last_message].sender_id == current_user.id %>
+                <span class="opacity-50">You: </span>
+              <% end %>
+              <%= truncate(conv[:last_message].body, length: 80) %>
+            </p>
+          </div>
+
+          <div class="conversation-card__aside">
+            <% if unread %>
+              <span class="conversation-card__badge"><%= conv[:unread_count] %></span>
+            <% end %>
+            <svg class="conversation-card__arrow" xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
+            </svg>
+          </div>
+
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

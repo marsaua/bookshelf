@@ -11,3 +11,5 @@ pin 'lent_modal'
 pin 'edit_comment_modal'
 pin 'book_search'
 pin 'swiper_init'
+pin "@rails/actioncable", to: "actioncable.esm.js"
+pin_all_from "app/javascript/channels", under: "channels"
