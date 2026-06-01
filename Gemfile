@@ -24,6 +24,9 @@ gem 'jbuilder'
 
 gem 'pg'
 
+gem 'searchkick'
+gem 'elasticsearch', '~> 8'
+
 gem 'activestorage-cloudinary-service'
 gem 'cloudinary'
 
@@ -90,3 +93,4 @@ group :test do
 end
 
 gem 'devise', '~> 5.0'
+gem 'kaminari'
