@@ -13,6 +13,7 @@
         <%if user_signed_in? %>
             <ul class="flex gap-8">
             <li class="header-item"><%= link_to  "My Books", books_path %></li>
+            <li class="header-item"><%= link_to  "All Books", all_books_path %></li>
             <li class="header-item"><%= link_to  "What's new", whats_new_path %></li>
                 <li class="header-item" style="position:relative;">
                   <%= link_to "All Users", users_path %>
@@ -86,6 +87,7 @@
                 <div data-burger-target="menu" class="hidden header-drop-menu">
                     <p class="font-bold text-gray-700">Welcome, <%= current_user.first_name %> <%= current_user.last_name %></p>
                     <%= link_to "My Books", books_path, class: "header-item" %>
+                    <%= link_to "All Books", all_books_path, class: "header-item" %>
                     <%= link_to "All Users", users_path, class: "header-item" %>
                     <div class="flex items-center gap-2">
                       <%= link_to "Messages", messages_path, class: "header-item" %>
