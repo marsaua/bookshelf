@@ -14,6 +14,12 @@ class BookRequestsController < ApplicationController
   end
 
   def create
+    book = Book.find(book_request_params[:book_id])
+    unless book.user == current_user || current_user.friends.exists?(book.user.id)
+      redirect_to book_path(book), alert: 'You must be friends with the owner to request this book.'
+      return
+    end
+
     case BookRequest.can_create?(book_request_params[:book_id], current_user)
     when :pending
       redirect_back fallback_location: books_path, alert: 'You already requested this book.' and return
