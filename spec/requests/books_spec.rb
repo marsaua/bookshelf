@@ -117,4 +117,28 @@ RSpec.describe BooksController, type: :request do
       expect(JSON.parse(response.body)).to eq([])
     end
   end
+
+  describe 'GET /books/all' do
+    it 'returns 200' do
+      get all_books_path
+      expect(response).to have_http_status(:ok)
+    end
+
+    it 'includes books from other users' do
+      other_user = FactoryBot.create(:user)
+      other_book = FactoryBot.create(:book, user: other_user)
+
+      get all_books_path
+
+      expect(assigns(:books)).to include(other_book)
+    end
+
+    it 'includes the current user own books' do
+      own_book = FactoryBot.create(:book, user: user)
+
+      get all_books_path
+
+      expect(assigns(:books)).to include(own_book)
+    end
+  end
 end

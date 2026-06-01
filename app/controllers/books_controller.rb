@@ -20,6 +20,10 @@ def index
   end
 end
 
+  def all
+    @books = Book.includes(:user).order(created_at: :desc).page(params[:page]).per(24)
+  end
+
   def show
     @borrowed_book = LentBook.find_by(borrower_id: current_user.id, book_id: @book.id)
     @book_request = BookRequest.where(book: @book, requester: current_user).order(created_at: :desc).first

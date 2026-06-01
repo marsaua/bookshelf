@@ -1,0 +1,34 @@
+<div class="p-6 flex flex-col gap-6">
+  <h1 class="text-3xl font-bold text-[#3b2a1a]">All Books</h1>
+
+  <% if @books.any? %>
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+      <% @books.each do |book| %>
+        <% cover = book.image.attached? ? url_for(book.image) : book.cover_url %>
+        <div class="flex flex-col gap-1">
+          <%= link_to book_path(book), data: { turbo: false }, class: "book-card" do %>
+            <div class="book-spine">
+              <% if cover.present? %>
+                <img src="<%= cover %>" alt="<%= book.title %>" class="book-cover">
+              <% end %>
+            </div>
+            <div class="book-title-spine"><%= book.title %></div>
+            <div class="book-author-spine"><%= book.author %></div>
+            <% if book.lent? %>
+              <span class="text-xs font-semibold text-red-500">Lent</span>
+            <% end %>
+          <% end %>
+          <p class="text-xs text-[#a08060] truncate px-1">
+            <%= link_to "#{book.user.first_name} #{book.user.last_name}", user_books_path(book.user), data: { turbo: false }, class: "underline hover:text-[#3b2a1a]" %>
+          </p>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="flex justify-center mt-4">
+      <%= paginate @books %>
+    </div>
+  <% else %>
+    <p class="text-[#a08060] italic text-center py-8">No books yet.</p>
+  <% end %>
+</div>
