@@ -35,7 +35,47 @@
         <%= render "book_requests/show" %>
 
     <% elsif @user.blank? && !@book_owner %>
-        <p>You took this book from <%= @borrowed_book.borrower.first_name %> <%= @borrowed_book.borrower.last_name %></p>
+        <% if current_user.friends.exists?(@book.user.id) %>
+            <% if @book_request %>
+                <% if @book_request.status == "pending" %>
+                    <p class="pt-6">You already asked this book. Please wait for the owner's decision.</p>
+                <% elsif @book_request&.accepted? %>
+                    <% if @book.lent? %>
+                        <p class="pt-6">Owner accepted your request. Enjoy reading.</p>
+                    <% else %>
+                        <p class="pt-6">You have read this book, but you can ask it again.</p>
+                        <%= button_to "Ask to Lend", book_requests_path,
+                                params: { book_request: { book_id: book.id } },
+                                method: :post,
+                                class: "button button-primary" %>
+                    <% end %>
+                <% elsif @book_request.declined? %>
+                    <p class="pt-6">Owner declined your request. Please try again later.</p>
+                    <% if @book_request.can_request_again? %>
+                        <%= button_to "Ask to Lend", book_requests_path,
+                            params: { book_request: { book_id: book.id } },
+                            method: :post,
+                            class: "button button-primary" %>
+                    <% else %>
+                        <p class="text-gray-400 text-sm">You can ask again <%= time_ago_in_words(@book_request.updated_at + 1.week) %> from now.</p>
+                    <% end %>
+                <% end %>
+            <% else %>
+                <%= button_to "Ask to Lend", book_requests_path,
+                    params: { book_request: { book_id: book.id } },
+                    method: :post,
+                    class: "button button-primary" %>
+            <% end %>
+        <% else %>
+            <div class="pt-6">
+                <button class="button button-primary opacity-50 cursor-not-allowed" disabled>Ask to Lend</button>
+                <p class="text-gray-400 text-sm mt-2">
+                    You need to be friends with
+                    <%= link_to "#{@book.user.first_name} #{@book.user.last_name}", user_path(@book.user), class: "underline" %>
+                    to borrow this book.
+                </p>
+            </div>
+        <% end %>
 
     <% else %>
         <% if @book_request %>
