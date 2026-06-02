@@ -1,8 +1,9 @@
 <div class="p-6 flex flex-col gap-6">
-  <h1 class="text-3xl font-bold text-[#3b2a1a]">All Books</h1>
+  <h1 class="text-3xl font-bold text-[#3b2a1a]">Search Books</h1>
+
   <%= form_with url: library_search_books_path, method: :get, data: { turbo: false } do |f| %>
-    <div class="flex gap-2">
-      <%= f.text_field :query, placeholder: "Search by title, author...",
+    <div class="flex gap-2 mb-6">
+      <%= f.text_field :query, value: params[:query], placeholder: "Search by title, author, description...",
           class: "flex-1 border border-[#c8a97e] rounded-lg px-4 py-2 text-[#3b2a1a] focus:outline-none focus:ring-2 focus:ring-[#c8a97e]" %>
       <%= f.submit "Search", class: "bg-[#3b2a1a] text-white px-6 py-2 rounded-lg hover:bg-[#5a3e2b] cursor-pointer" %>
     </div>
@@ -31,11 +32,9 @@
         </div>
       <% end %>
     </div>
-
-    <div class="flex justify-center mt-4">
-      <%= paginate @books %>
-    </div>
+  <% elsif params[:query].present? %>
+    <p class="text-[#a08060] italic text-center py-8">No books found for "<%= params[:query] %>".</p>
   <% else %>
-    <p class="text-[#a08060] italic text-center py-8">No books yet.</p>
+    <p class="text-[#a08060] italic text-center py-8">Enter a search query above.</p>
   <% end %>
 </div>

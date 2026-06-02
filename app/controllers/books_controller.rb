@@ -75,6 +75,24 @@ end
     render json: @results
   end
 
+  def library_search
+    if params[:query].present?
+      begin
+        @books = Book.search(
+          params[:query],
+          fields: [:title, :author, :description, :category],
+          misspellings: { below: 5 }
+        ).to_a
+        Rails.logger.info "ES results: #{@books.count}"
+      rescue => e
+        Rails.logger.info "ES error: #{e.message}"
+        @books = Book.where("title LIKE ? OR author LIKE ?", "%#{params[:query]}%", "%#{params[:query]}%")
+      end
+    else
+      @books = Book.includes(:user).order(created_at: :desc).limit(24)
+    end
+  end
+
   def destroy
     @book.destroy
     redirect_to books_path
