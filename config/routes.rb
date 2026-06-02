@@ -41,6 +41,7 @@ Rails.application.routes.draw do
     collection do
       get :search
       get :all
+      get :library_search
     end
     member do
       patch :lend
