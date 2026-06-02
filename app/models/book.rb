@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class Book < ApplicationRecord
+
+  searchkick word_start: [:title, :author, :description]
+  
   belongs_to :user
 
   validates :title, presence: true
@@ -20,5 +23,17 @@ class Book < ApplicationRecord
 
   def lent?
     active_lent.present?
+  end
+
+  def search_data
+    {
+      title:  title,
+      author: author,
+      description: description,
+      category: category,
+      publisher: publisher,
+      language: language,
+      page_count: page_count
+    }
   end
 end
